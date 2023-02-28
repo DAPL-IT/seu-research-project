@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-
+/* INITIAL TEST ROUTES START */
 Route::get('/', function () {
     return view('welcome');
 });
@@ -16,6 +16,15 @@ Route::get('/admin/profile', function () {
     return view('backend.admin.profile.show');
 });
 
+Route::get('/admin/dashboard', function (){
+    return "HELLO ADMIN";
+});
+
+Route::get('/moderator/dashboard', function (){
+    return "HELLO MODERATOR";
+});
+
+/* INITIAL TEST ROUTES END */
 
 Route::get('/dashboard', function () {
     return view('dashboard');
