@@ -24,6 +24,9 @@ Route::get('/moderator/dashboard', function (){
     return "HELLO MODERATOR";
 });
 
+// Route::get('/management/login', function (){
+//     return view('auth.management_login');
+// });
 /* INITIAL TEST ROUTES END */
 
 Route::get('/dashboard', function () {

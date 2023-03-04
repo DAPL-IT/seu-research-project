@@ -17,7 +17,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('auth.management_login');
     }
 
     /**
@@ -29,13 +29,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // if(Auth::user()->role === 'admin'){
-        //     return redirect()->intended('admin/dashboard');
-        // }
-        // else if(Auth::user()->role === 'moderator'){
-        //     return redirect()->intended('moderator/dashboard');
-        // }
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $home = RouteServiceProvider::ADMIN_HOME;
+
+        if(Auth::user()->role === 'moderator'){
+            $home = RouteServiceProvider::MODERATOR_HOME;
+        }
+
+        return redirect()->intended($home);
     }
 
     /**
