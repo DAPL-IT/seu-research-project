@@ -15,7 +15,8 @@ class User extends Authenticatable
 
     public const ADMIN = 'admin';
     public const MODERATOR = 'moderator';
-    public const AD_POSTER = 'adposter';
+    public const ADMIN_IMAGE_DIR = 'images/admin/';
+    public const MODERATOR_IMAGE_DIR = 'images/moderator/';
 
     /**
      * The attributes that are mass assignable.
