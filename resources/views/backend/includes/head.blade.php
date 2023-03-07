@@ -4,10 +4,11 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link href="{{asset('backend/img/logo/logo.png')}}" rel="icon">
-<title>@yield('title')</title>
+<title>{{ucwords(Auth::user()->role)}} | @yield('title')</title>
 <link href="{{asset('backend/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
 <link href="{{asset('backend/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
 <link href="{{asset('backend/css/ruang-admin.min.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{asset('backend/vendor/toastr/toastr.css')}}">
 <style>
     .logout-btn{
         background:transparent;

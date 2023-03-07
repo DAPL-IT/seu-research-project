@@ -1,11 +1,11 @@
 @extends('backend.layout')
 
 @section('title')
-Admin | Dashboard
+Dashboard
 @endsection
 
 @section('panel_title')
-Admin Dashboard
+Dashboard
 @endsection
 
 @section('main')

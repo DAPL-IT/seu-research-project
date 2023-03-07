@@ -28,7 +28,7 @@ Profile
                             <h2 class="m-b-5">Marshall Nichols</h2>
                             <p class="text-opacity font-size-13">@Marshallnich</p>
                             <p class="text-dark m-b-20">Frontend Developer, UI/UX Designer</p>
-                            <a href="{{route('admin.profile.edit')}}" class="btn btn-primary btn-tone btn-sm"><i class="fas fa-edit"></i>&ensp;EDIT</a>
+                            <a href="{{route('moderator.profile.edit')}}" class="btn btn-primary btn-tone btn-sm"><i class="fas fa-edit"></i>&ensp;EDIT</a>
                         </div>
                     </div>
                 </div>

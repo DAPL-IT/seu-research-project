@@ -25,7 +25,7 @@ Profile Edit
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pill-general" role="tabpanel" aria-labelledby="pill-general-tab">
-                    <form class="mt-4" method="POST" action="{{route('admin.profile.update.general')}}">
+                    <form class="mt-4" method="POST" action="{{route('moderator.profile.update.general')}}">
                         @csrf
                         <div class="row">
                             <div class="col-lg-4">
@@ -65,7 +65,7 @@ Profile Edit
                     </form>
                 </div>
                 <div class="tab-pane fade" id="pill-profile-pic" role="tabpanel" aria-labelledby="pill-profile-pic-tab">
-                    <form class="mt-4" method="POST" enctype="multipart/form-data" action="{{route('admin.profile.update.image')}}">
+                    <form class="mt-4" method="POST" enctype="multipart/form-data" action="{{route('moderator.profile.update.image')}}">
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -95,7 +95,7 @@ Profile Edit
                     </form>
                 </div>
                 <div class="tab-pane fade" id="pill-pwd" role="tabpanel" aria-labelledby="pill-pwd-tab">
-                    <form class="mt-4" method="POST" action="{{route('admin.profile.update.password')}}">
+                    <form class="mt-4" method="POST" action="{{route('moderator.profile.update.password')}}">
                         @csrf
                         <div class="row">
                             <div class="col-lg-4">
