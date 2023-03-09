@@ -24,8 +24,8 @@
         </a>
         <div id="collapseMods" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar" style="">
         <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="">View All</a>
-            <a class="collapse-item" href="">Add New</a>
+            <a class="collapse-item" href="{{route('admin.manage.moderators.all')}}">View All</a>
+            <a class="collapse-item" href="{{route('admin.manage.moderators.add')}}">Add New</a>
         </div>
         </div>
     </li>

@@ -117,7 +117,7 @@ Profile Edit
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary btn-sm mt-4 " type="submit"><i class="fas fa-edit"></i>&ensp;Update</button>
+                                <button class="btn btn-primary btn-sm mt-4" type="submit"><i class="fas fa-edit"></i>&ensp;Update</button>
                             </div>
                         </div>
                     </form>

@@ -29,10 +29,12 @@ class User extends Authenticatable
         'password',
         'phone',
         'image',
-        'current_addr',
+        'current_address',
         'permanent_address',
         'role',
         'nid',
+        'locked',
+        'active',
     ];
 
     /**
@@ -43,7 +45,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'role',
+        'nid',
     ];
 
     /**
@@ -63,7 +65,4 @@ class User extends Authenticatable
         return $role === User::MODERATOR;
     }
 
-    public function isAdPoster(string $role) : bool {
-        return $role === User::AD_POSTER;
-    }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\ModeratorController;
 use App\Http\Controllers\Moderator\ModeratorDashboardController;
 use App\Http\Controllers\Moderator\ModeratorProfileController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,15 @@ Route::prefix('/admin')
         Route::post('/update/image', 'updateImage')->name('update.image');
         Route::post('/update/password', 'updatePassword')->name('update.password');
     });
+
+    Route::prefix("/manage/moderators")
+    ->controller(ModeratorController::class)
+    ->name('manage.moderators.')
+    ->group(function(){
+        Route::get('/', 'index')->name('all');
+        Route::get('/show/{id}', 'show')->name('single');
+        Route::get('/add', 'create')->name('add');
+    });
 });
 
 Route::prefix('/moderator')
@@ -41,6 +51,7 @@ Route::prefix('/moderator')
         Route::post('/update/image', 'updateImage')->name('update.image');
         Route::post('/update/password', 'updatePassword')->name('update.password');
     });
+
 });
 
 
@@ -49,23 +60,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/admin/dashboard', function (){
-//     return "HELLO ADMIN";
-// });
 
-
-// Route::get('/moderator/dashboard', function (){
-//     return "HELLO MODERATOR";
-// });
-
-// Route::get('/management/login', function (){
-//     return view('auth.management_login');
-// });
-/* INITIAL TEST ROUTES END */
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
