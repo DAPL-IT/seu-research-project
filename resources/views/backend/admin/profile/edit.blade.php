@@ -31,31 +31,31 @@ Profile Edit
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="nameField">Name</label>
-                                    <input type="text" class="form-control" id="nameField" >
+                                    <input type="text" class="form-control" id="nameField" name="name" value="{{ $auth_admin->name }}" >
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="emailField">Email</label>
-                                    <input type="email" class="form-control" id="emailField" >
+                                    <input type="email" class="form-control" id="emailField" name="email" value="{{ $auth_admin->email }}" >
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="phoneField">Phone</label>
-                                    <input type="email" class="form-control" id="phoneField" >
+                                    <input type="text" class="form-control" id="phoneField" name="phone", value="{{ $auth_admin->phone }}" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="currAddrField">Current Address</label>
-                                    <textarea class="form-control" name="" id="currAddrField" rows="3"></textarea>
+                                    <textarea class="form-control" name="current_address" id="currAddrField" rows="3">{{ $auth_admin->current_address }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="parAddrField">Parmanent Address</label>
-                                    <textarea class="form-control" name="" id="parAddrField" rows="3" placeholder="Leave it empty if Parmanent Addr. is same as Current Addr."></textarea>
+                                    <textarea class="form-control" name="permanent_address" id="parAddrField" rows="3" placeholder="Leave it empty if Parmanent Addr. is same as Current Addr.">{{ $auth_admin->permanent_address }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -83,7 +83,7 @@ Profile Edit
                                 <div class="form-group">
                                     <label>New Profile Picture</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="proPicField" accept=".jpg, .jpeg, .png">
+                                        <input type="file" class="custom-file-input" id="proPicField" name="image" accept=".jpg, .jpeg, .png">
                                         <label class="custom-file-label" for="proPicField">Choose Image</label>
                                     </div>
                                 </div>
@@ -101,19 +101,19 @@ Profile Edit
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="currPwd">Current Password</label>
-                                    <input type="password" class="form-control" id="currPwd" >
+                                    <input type="password" class="form-control" id="currPwd" name="current_password" >
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="newPwd">New Password</label>
-                                    <input type="password" class="form-control" id="newPwd" >
+                                    <input type="password" class="form-control" id="newPwd" name="new_password">
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="retypeNewPwd">Retype New Password</label>
-                                    <input type="password" class="form-control" id="retypeNewPwd" >
+                                    <input type="password" class="form-control" id="retypeNewPwd" name="password" >
                                 </div>
                             </div>
                             <div class="col-12">
