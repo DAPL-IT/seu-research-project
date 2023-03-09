@@ -70,12 +70,12 @@ Profile Edit
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <div style="width: 150px; height:150px">
-                                        <img src="@if (is_null(Auth::user()->image))
-                                            {{asset('images/no-image.jpg')}}
-                                            @else
-                                            {{asset(Auth::user()->image)}}
-                                        @endif" alt="" class="img img-fluid rounded-circle">
+                                    <div class="profile-image-container">
+                                        <img class="profile-image img-fluid" src="@if (is_null(Auth::user()->image))
+                                        {{asset('images/no-image.jpg')}}
+                                        @else
+                                        {{asset(Auth::user()->image)}}
+                                    @endif" alt="profile_image" />
                                     </div>
                                 </div>
                             </div>
@@ -83,13 +83,14 @@ Profile Edit
                                 <div class="form-group">
                                     <label>New Profile Picture</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="proPicField" name="image" accept=".jpg, .jpeg, .png">
+                                        <input type="file" class="custom-file-input" id="proPicField" name="image" accept=".jpg, .jpeg, .png" required>
                                         <label class="custom-file-label" for="proPicField">Choose Image</label>
+                                        <small class="text-danger d-block mt-3">Maximum Image Size: 5MB, Recommended dimension is 150*150</small>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary btn-sm mt-4 " type="submit"><i class="fas fa-edit"></i>&ensp;Update</button>
+                                <button class="btn btn-primary btn-sm mt-3" type="submit"><i class="fas fa-edit"></i>&ensp;Update</button>
                             </div>
                         </div>
                     </form>

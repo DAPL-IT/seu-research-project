@@ -64,7 +64,13 @@ Profile
                                         <i class="fas fa-thumbtack"></i>&ensp;
                                         <span>Per.Addr: </span>
                                     </p>
-                                    <p class="col font-weight-semibold"> {{ $auth_admin->permanent_address }}</p>
+                                    <p class="col font-weight-semibold">
+                                        @if (is_null($auth_admin->permanent_address))
+                                            N/A
+                                        @else
+                                            {{ $auth_admin->permanent_address }}
+                                        @endif
+                                    </p>
                                 </li>
                             </ul>
                         </div>

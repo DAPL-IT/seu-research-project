@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Traits\WebAlertTrait;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Auth;
-use File;
-use Image;
+use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 class AdminProfileController extends Controller
 {
@@ -39,12 +39,14 @@ class AdminProfileController extends Controller
     public function updateGeneral(Request $request)
     {
         $auth_admin = Auth::user();
-        $admin = User::find($auth_admin->id);
+        $admin = User::where('id', $auth_admin->id)->firstOrFail();
 
-        $this->validate($request, [
-            'name' =>'required',
-            'email' =>'required|email|unique:users,email',
-            'phone' => 'unique:users,phone|max:15',
+        $request->validate([
+            'name' =>'required|min:3|max:150',
+            'email' =>'required|email|unique:users,email,'.$auth_admin->id,
+            'phone' => 'required|max:15|unique:users,phone,'.$auth_admin->id,
+            'current_address' => 'required|max:250',
+            'permanent_address' => 'nullable|max:250'
         ]);
 
         $admin->name = $request->name;
@@ -54,7 +56,16 @@ class AdminProfileController extends Controller
         $admin->permanent_address = $request->permanent_address;
 
         $admin->save();
-        return redirect()->back()->with('alert', $this->successAlert('Profile is Updated Successfully!!'));
+
+        if(!$admin->wasChanged()){
+            return redirect()
+            ->route('admin.profile.show')
+            ->with('alert', $this->infoAlert('No Changes were Made!'));
+        }
+
+        return redirect()
+        ->route('admin.profile.show')
+        ->with('alert', $this->successAlert('Profile is Updated Successfully!!'));
     }
 
     /**
@@ -63,30 +74,32 @@ class AdminProfileController extends Controller
     public function updateImage(Request $request)
     {
         $auth_admin = Auth::user();
-        $admin = User::find($auth_admin->id);
+        $admin = User::where('id', $auth_admin->id)->firstOrFail();
 
-        if($request->hasFile('image')){
-            if(file_exists(public_path($admin->image))){
-                File::delete(public_path($admin->image));
-                $location  = User::ADMIN_IMAGE_DIR;
-                $imageFile = $request->file('image');
-                $imageName = mt_rand(10000, 99999).'_image.'.$imageFile->getClientOriginalExtension();
-                Image::make($imageFile)->resize(200,200)->save($location.$imageName);
-                $admin->image = $location.$imageName;
-                $admin->save();
-                return redirect()->back()->with('alert', $this->successAlert('Image is Updated Successfully!!'));
-            }
-            else{
-                $location  = User::ADMIN_IMAGE_DIR;
-                $imageFile = $request->file('image');
-                $imageName = mt_rand(10000, 99999).'_image.'.$imageFile->getClientOriginalExtension();
-                Image::make($imageFile)->resize(200,200)->save($location.$imageName);
-                $admin->image = $location.$imageName;
-                $admin->save();
-                return redirect()->back()->with('alert', $this->successAlert('Image is Updated Successfully!!'));
-            }
+        $request->validate([
+            'image' => 'required|image|mimes:png,jpg,jpeg|min:1|max:5121'
+        ]);
 
+        if(file_exists($admin->image)){
+            unlink($admin->image);
         }
+
+        $location  = User::ADMIN_IMAGE_DIR;
+        $imageFile = $request->file('image');
+        $imageName = Str::random(16).'_dt_'.date('Ymd_His').'.'.$imageFile->getClientOriginalExtension();
+
+        Image::make($imageFile)
+        ->fit(150,150, function($constraint){
+            $constraint->upsize();
+        })->save($location.$imageName);
+
+        $admin->image = $location.$imageName;
+
+        $admin->save();
+
+        return redirect()
+        ->route('admin.profile.show')
+        ->with('alert', $this->successAlert('Profile Image is Updated Successfully!!'));
     }
 
     /**
@@ -103,7 +116,7 @@ class AdminProfileController extends Controller
             'password' => 'required',
         ]);
 
-        
+
     }
 
 }
