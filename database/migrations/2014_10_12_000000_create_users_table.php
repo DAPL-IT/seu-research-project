@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone', 15)->unique()->nullable();
             $table->string('image')->nullable();
-            $table->string('nid')->nullable();
+            $table->string('nid')->unique()->nullable();
             $table->string('current_address')->nullable();
             $table->string('permanent_address')->nullable();
             $table->string('role');
             $table->unsignedTinyInteger('locked')->default(1)->comment('0=user is locked, 1=user can access facilities');
-            $table->unsignedTinyInteger('active')->default(0)->comment('0=user is not online, 1 = user is online');
+            $table->unsignedTinyInteger('online')->default(0)->comment('0=user is not online, 1 = user is online');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

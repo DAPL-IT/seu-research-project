@@ -4,7 +4,15 @@
 <script src="{{asset('backend/js/ruang-admin.js')}}"></script>
 {{-- <script src="{{asset('backend/vendor/chart.js/Chart.min.js')}}"></script>
 <script src="{{asset('backend/js/demo/chart-area-demo.js')}}"></script> --}}
+
+<!-- Plugins -->
 <script src="{{asset('backend/vendor/toastr/toastr.min.js')}}"></script>
+<script src="{{asset('backend/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('backend/vendor/datatables/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('backend/vendor/datatables/responsive.bootstrap4.min.js
+')}}"></script>
+
 <script>
 $(document).ready(()=>{
     toastr.options = {

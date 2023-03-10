@@ -16,12 +16,12 @@ Profile
                 <div class="col-xl-6 mb-xl-0 mb-4">
                     <div class="d-md-flex align-items-center">
                         <div class="mr-md-4 mr-0 mb-md-0 mb-4">
-                            <div style="width: 150px; height:150px">
-                                <img src="@if (is_null(Auth::user()->image))
+                            <div class="profile-image-container">
+                                <img class="profile-image img-fluid" src="@if (is_null(Auth::user()->image))
                                 {{asset('images/no-image.jpg')}}
                                 @else
                                 {{asset(Auth::user()->image)}}
-                            @endif" alt="" class="img img-fluid rounded-circle">
+                            @endif" alt="profile_image" />
                             </div>
                         </div>
                         <div >
@@ -64,7 +64,13 @@ Profile
                                         <i class="fas fa-thumbtack"></i>&ensp;
                                         <span>Per.Addr: </span>
                                     </p>
-                                    <p class="col font-weight-semibold"> {{ $auth_admin->permanent_address }}</p>
+                                    <p class="col font-weight-semibold">
+                                        @if (is_null($auth_admin->permanent_address))
+                                            N/A
+                                        @else
+                                            {{ $auth_admin->permanent_address }}
+                                        @endif
+                                    </p>
                                 </li>
                             </ul>
                         </div>
