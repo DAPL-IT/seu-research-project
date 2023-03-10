@@ -116,6 +116,23 @@ class AdminProfileController extends Controller
             'password' => 'required',
         ]);
 
+            if (password_verify($request->current_password, $admin->password)){
+                if($request->new_password==$request->password){
+                    $admin->password=bcrypt($request->new_password);
+                    $admin->update();
+                    return redirect()
+                    ->route('admin.profile.show')
+                    ->with('alert', $this->successAlert('Password is Updated Successfully!!'));
+                }
+                else{
+                    return redirect()->back()
+                    ->with('alert', $this->errorAlert('Password Confirmation is wrong!!'));
+                }
+            }
+            else{
+                return redirect()->back()->with('alert', $this->errorAlert('Current Password did not match!!'));
+            }
+
 
     }
 
