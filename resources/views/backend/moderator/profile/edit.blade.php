@@ -101,19 +101,19 @@ Profile Edit
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="currPwd">Current Password</label>
-                                    <input type="password" class="form-control" id="currPwd" name="current_password" >
+                                    <input type="password" class="form-control" id="currPwd" name="current_password" required>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="newPwd">New Password</label>
-                                    <input type="password" class="form-control" id="newPwd" name="new_password" >
+                                    <input type="password" class="form-control" id="newPwd" name="new_password" required>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="retypeNewPwd">Retype New Password</label>
-                                    <input type="password" class="form-control" id="retypeNewPwd" name="password" >
+                                    <input type="password" class="form-control" id="retypeNewPwd" name="new_password_confirmation" required>
                                 </div>
                             </div>
                             <div class="col-12">

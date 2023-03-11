@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Moderator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\WebAlertTrait;
-use Illuminate\Support\Str;
 use App\Models\User;
-use Auth;
-use Image;
+use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ModeratorProfileController extends Controller
 {
@@ -107,29 +108,26 @@ class ModeratorProfileController extends Controller
     public function updatePassword(Request $request)
     {
         $auth_moderator = Auth::user();
-        $moderator = User::find($auth_moderator->id);
+        $moderator = User::where('id', $auth_moderator->id)->firstOrFail();
 
-        $this->validate($request, [
-            'current_password' =>'required',
-            'new_password' =>'required',
-            'password' => 'required',
+        $request->validate([
+            'current_password' => 'required',
+            'new_password'     => 'required|min:8|max:32|confirmed',
+        ],
+        [
+            'new_password.confirmed' => 'The new password and Retyped new password did not match',
         ]);
 
-            if (password_verify($request->current_password, $moderator->password)){
-                if($request->new_password==$request->password){
-                    $moderator->password=bcrypt($request->new_password);
-                    $moderator->update();
-                    return redirect()
-                    ->route('moderator.profile.show')
-                    ->with('alert', $this->successAlert('Password is Updated Successfully!!'));
-                }
-                else{
-                    return redirect()->back()
-                    ->with('alert', $this->errorAlert('Password Confirmation is wrong!!'));
-                }
-            }
-            else{
-                return redirect()->back()->with('alert', $this->errorAlert('Current Password did not match!!'));
-            }
+        if(!(Hash::check($request->current_password, $moderator->password))){
+            return back()->with('alert', $this->errorAlert('Current password was incorrect!'));
+        }
+
+        $moderator->password = Hash::make($request->new_password);
+        $moderator->save();
+
+        return redirect()
+        ->route('moderator.profile.show')
+        ->with('alert',$this->successAlert('Password is Updated Successfully!!'));
+
     }
 }
