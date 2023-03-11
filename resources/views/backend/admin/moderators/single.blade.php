@@ -80,7 +80,7 @@ Manage Moderator
                 </div>
                 <div class="form-group">
                     <label for="modAccStatus">Account Status</label>
-                   <select name="" id="modAccStatus" class="form-control">
+                   <select name="" id="modAccStatus" class="form-control" required>
                         <option >--SELECT--</option>
                         <option value="0">Locked</option>
                         <option value="1">Unlocked</option>

@@ -42,13 +42,13 @@ Add New Moderator
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="modPwd">Set Password</label>
-                            <input type="text" name="" id="modPwd" class="form-control">
+                            <input type="text" name="" id="modPwd" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="currAddrField">Current Address</label>
-                            <textarea class="form-control" name="" id="currAddrField" rows="3"></textarea>
+                            <textarea class="form-control" name="" id="currAddrField" rows="3" required></textarea>
                         </div>
                     </div>
                     <div class="col-md-6">

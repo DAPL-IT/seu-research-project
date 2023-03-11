@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class AdminProfileController extends Controller
@@ -108,32 +109,26 @@ class AdminProfileController extends Controller
     public function updatePassword(Request $request)
     {
         $auth_admin = Auth::user();
-        $admin = User::find($auth_admin->id);
+        $admin = User::where('id', $auth_admin->id)->firstOrFail();
 
-        $this->validate($request, [
-            'current_password' =>'required',
-            'new_password' =>'required',
-            'password' => 'required',
+        $request->validate([
+            'current_password' => 'required',
+            'new_password'     => 'required|min:8|max:32|confirmed',
+        ],
+        [
+            'new_password.confirmed' => 'The new password and Retyped new password did not match',
         ]);
 
-            if (password_verify($request->current_password, $admin->password)){
-                if($request->new_password==$request->password){
-                    $admin->password=bcrypt($request->new_password);
-                    $admin->update();
-                    return redirect()
-                    ->route('admin.profile.show')
-                    ->with('alert', $this->successAlert('Password is Updated Successfully!!'));
-                }
-                else{
-                    return redirect()->back()
-                    ->with('alert', $this->errorAlert('Password Confirmation is wrong!!'));
-                }
-            }
-            else{
-                return redirect()->back()->with('alert', $this->errorAlert('Current Password did not match!!'));
-            }
+        if(!(Hash::check($request->current_password, $admin->password))){
+            return back()->with('alert', $this->errorAlert('Current password was incorrect!'));
+        }
 
+        $admin->password = Hash::make($request->new_password);
+        $admin->save();
 
+        return redirect()
+        ->route('admin.profile.show')
+        ->with('alert',$this->successAlert('Password is Updated Successfully!!'));
     }
 
 }
