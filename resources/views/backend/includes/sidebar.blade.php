@@ -1,5 +1,5 @@
 <ul class="navbar-nav sidebar sidebar-light accordion d-flex pb-3" id="accordionSidebar">
-    <a class="sidebar-brand d-flex justify-content-start" href="">
+    <a class="sidebar-brand d-flex justify-content-start" href="@if(Auth::user()->role == 'admin') {{route('admin.dashboard')}} @else {{route('moderator.dashboard')}} @endif">
       {{-- <div class="sidebar-brand-icon">
         <img src="img/logo/logo2.png">
       </div> --}}
@@ -7,7 +7,7 @@
     </a>
 
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="@if(Auth::user()->role == 'admin') {{route('admin.dashboard')}} @else {{route('moderator.dashboard')}} @endif">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
     </li>
@@ -31,6 +31,18 @@
     </li>
    @endif
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdPosters" aria-expanded="false" aria-controls="collapseAdPosters">
+            <i class="fas fa-user-friends"></i>
+        <span>Users</span>
+        </a>
+        <div id="collapseAdPosters" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{route('users.show', ['role'=>Auth::user()->role])}}">View All</a>
+            <a class="collapse-item" href="{{route('users.locked', ['role'=>Auth::user()->role])}}">Locked Users</a>
+        </div>
+        </div>
+    </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRentAds" aria-expanded="false" aria-controls="collapseRentAds">
             <i class="fas fa-ad"></i>

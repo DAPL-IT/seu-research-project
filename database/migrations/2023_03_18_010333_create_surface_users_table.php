@@ -11,25 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('surface_users', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->autoIncrement();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone', 15)->unique()->nullable();
+            $table->string('email');
+            $table->string('password');
+            $table->string('phone', 15)->nullable();
+            $table->string('nid')->nullable();
             $table->string('image')->nullable();
-            $table->string('nid')->unique()->nullable();
-            $table->string('current_address')->nullable();
-            $table->string('permanent_address')->nullable();
-            $table->string('role');
             $table->unsignedTinyInteger('locked')->default(1)->comment('0=user is locked, 1=user can access facilities');
             $table->unsignedTinyInteger('online')->default(0)->comment('0=user is not online, 1 = user is online');
+            $table->string('token')->nullable()->comment('It can be used as pwd reset token and email verification token');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['id', 'name', 'email', 'role', 'locked', 'online']);
+            $table->index(['id', 'name', 'email']);
         });
     }
 
@@ -38,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('surface_users');
     }
 };
