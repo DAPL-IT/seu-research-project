@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class ModeratorController extends Controller
 {
@@ -15,7 +16,11 @@ class ModeratorController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            $data = DataTables::of(User::where('role', 'moderator')->get())
+            $moderators = DB::table('users')
+            ->where('role', 'moderator')
+            ->orderBy('id', 'desc');
+
+            $data = DataTables::of($moderators)
                     ->editColumn('id', '<span class="badge badge-dark">#{{$id}}</span>')
                     ->editColumn('image', function ($row) {
                         $image = is_null($row->image) ? 'images/no-image.jpg' : $row->image;
