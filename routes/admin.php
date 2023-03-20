@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\ModeratorController;
+use App\Http\Controllers\Admin\RentTypeController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/admin')
@@ -29,5 +30,15 @@ Route::prefix('/admin')
         Route::get('/', 'index')->name('all');
         Route::get('/account/{id}', 'show')->name('single');
         Route::get('/add', 'create')->name('add');
+    });
+
+    Route::prefix('/manage/rent-types')
+    ->controller(RentTypeController::class)
+    ->name('manage.rent_types.')
+    ->group(function(){
+        Route::get('/', 'index')->name('all');
+        Route::get('/edit/{id}', 'edit');
+        Route::post('/store', 'store')->name('store');
+        Route::post('/update/{id}', 'update');
     });
 });

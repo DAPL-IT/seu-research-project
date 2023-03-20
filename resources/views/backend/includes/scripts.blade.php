@@ -12,6 +12,7 @@
 <script src="{{asset('backend/vendor/datatables/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('backend/vendor/datatables/responsive.bootstrap4.min.js
 ')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 $(document).ready(()=>{

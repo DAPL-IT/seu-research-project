@@ -29,6 +29,7 @@
         </div>
         </div>
     </li>
+
    @endif
 
     <li class="nav-item">
@@ -43,6 +44,21 @@
         </div>
         </div>
     </li>
+
+    @if(Auth::user()->role == 'admin')
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRentTypes" aria-expanded="false" aria-controls="collapseRentTypes">
+            <i class="fas fa-list"></i>
+          <span>Rent Types</span>
+        </a>
+        <div id="collapseRentTypes" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{route('admin.manage.rent_types.all')}}">Manage</a>
+          </div>
+        </div>
+    </li>
+    @endif
+
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRentAds" aria-expanded="false" aria-controls="collapseRentAds">
             <i class="fas fa-ad"></i>
