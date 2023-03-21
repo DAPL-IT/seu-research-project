@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Traits\WebAlertTrait;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class ModeratorController extends Controller
 {
+    use WebAlertTrait;
     /**
      * Display a listing of the resource.
      */
@@ -66,7 +70,32 @@ class ModeratorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' =>'required|min:3|max:150',
+            'email' =>'required|email|unique:users,email',
+            'phone' => 'required|max:15|unique:users,phone',
+            'nid' => 'required|max:13|unique:users,nid',
+            'password' => 'required|min:8|max:32',
+            'current_address' => 'required|max:250',
+            'permanent_address' => 'nullable|max:250'
+        ]);
+
+        $auth_admin = Auth::user();
+        if($auth_admin && $auth_admin->role=='admin'){
+            $moderator = new User();
+            $moderator->name = $request->name;
+            $moderator->email = $request->email;
+            $moderator->phone = $request->phone;
+            $moderator->nid = $request->nid;
+            $moderator->password = Hash::make($request->password);
+            $moderator->current_address = $request->current_address;
+            $moderator->permanent_address = $request->permanent_address;
+            $moderator->role = 'moderator';
+
+            $moderator->save();
+            return redirect()->route('admin.manage.moderators.all')
+            ->with('alert',$this->successAlert('Moderator is created Successfully!!'));
+        }
     }
 
     /**
@@ -74,7 +103,8 @@ class ModeratorController extends Controller
      */
     public function show(string $id)
     {
-        return view('backend.admin.moderators.single');
+        $moderator = User::where('id', $id)->firstOrFail();
+        return view('backend.admin.moderators.single', compact('moderator'));
     }
 
     /**
@@ -90,7 +120,26 @@ class ModeratorController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'locked' =>'required',
+            'nid' =>'required|max:13|unique:users,nid,'.$id,
+        ]);
+
+        $moderator = User::where('id', $id)->firstOrFail();
+        $moderator->nid = $request->nid;
+        $moderator->locked = $request->locked;
+        $moderator->save();
+
+        if(!$moderator->wasChanged()){
+            return redirect()
+            ->route('admin.manage.moderators.all')
+            ->with('alert', $this->infoAlert('No Changes were Made!'));
+        }
+
+        return redirect()
+        ->route('admin.manage.moderators.all')
+        ->with('alert', $this->successAlert('Moderator info is Updated Successfully!!'));
+
     }
 
     /**
