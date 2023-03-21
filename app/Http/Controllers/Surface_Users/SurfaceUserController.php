@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\SurfaceUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Traits\WebAlertTrait;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 
 class SurfaceUserController extends Controller
 {
+    use WebAlertTrait;
     /**
      * Display a listing of the resource.
      */
@@ -19,7 +21,7 @@ class SurfaceUserController extends Controller
 
         if($request->ajax()){
             $users = DB::table('surface_users')
-            ->where('locked', 0)
+            ->where('locked', 1)
             ->orderBy('id', 'desc');
 
             $data = DataTables::of($users)
@@ -46,7 +48,7 @@ class SurfaceUserController extends Controller
 
         if($request->ajax()){
             $users = DB::table('surface_users')
-            ->where('locked', 1)
+            ->where('locked', 0)
             ->orderBy('id', 'desc');
 
             $data = DataTables::of($users)
@@ -85,9 +87,11 @@ class SurfaceUserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        return view('backend.surface_users.single');
+        $user_id = $request->route('id');
+        $surface_user = SurfaceUser::where('id', $user_id)->firstOrFail();
+        return view('backend.surface_users.single', compact('surface_user'));
     }
 
     /**
@@ -101,9 +105,29 @@ class SurfaceUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $user_id = $request->route('id');
+
+        $request->validate([
+            'locked' =>'required',
+            'nid' =>'required|max:13|unique:surface_users,nid,'.$user_id,
+        ]);
+
+        $surface_user = SurfaceUser::where('id', $user_id)->firstOrFail();
+        $surface_user->nid = $request->nid;
+        $surface_user->locked = $request->locked;
+        $surface_user->save();
+
+        if(!$surface_user->wasChanged()){
+            return redirect()
+            ->back()
+            ->with('alert', $this->infoAlert('No Changes were Made!'));
+        }
+
+        return redirect()
+        ->back()
+        ->with('alert', $this->successAlert('User info is Updated Successfully!!'));
     }
 
     /**

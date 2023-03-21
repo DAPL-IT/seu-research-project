@@ -18,47 +18,63 @@ Manage User
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-column">
                     <div class="profile-image-container">
-                        <img src="{{asset('images/no-image.jpg')}}" alt="" class="profile-image img-fluid">
+                        @if ($surface_user->image==null)
+                        <img src="{{asset('images/no-image.jpg')}}" alt="user_image" class="profile-image img-fluid">
+                        @else
+                        <img src="{{asset($surface_user->image)}}" alt="user_image" class="profile-image img-fluid">
+                        @endif
                     </div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                   <span class="font-weight-bold">Name:</span>
-                  <span class="text-break">Saleh Ibne Omar</span>
+                  <span class="text-break">{{ $surface_user->name }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Email:</span>
-                    <span class="text-break">salehibneomar@gmail.com</span>
+                    <span class="text-break">{{ $surface_user->email }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Phone:</span>
-                    <span class="text-break">+8801700000000</span>
+                    <span class="text-break">{{ $surface_user->phone }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">NID:</span>
-                    <span class="text-break">123456789</span>
+                    <span class="text-break">{{ $surface_user->nid }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Account Locked ?:</span>
-                    <span class="badge badge-success">NO</span>
+                    <span class="badge badge-success">
+                        @if ($surface_user->locked==1)
+                            NO
+                        @else
+                            YES
+                        @endif
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Is Online ?:</span>
-                    <span class="badge badge-danger">NO</span>
+                    <span class="badge badge-danger">
+                        @if ($surface_user->online==1)
+                            YES
+                        @else
+                            NO
+                        @endif
+                    </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Joined:</span>
-                    <span class="text-break">02/05/2023</span>
+                    <span class="text-break">{{ date('m/d/Y', strtotime($surface_user->created_at)) ?? 'N.A' }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold mr-lg-5 mr-0">Current Address:</span>
                     <span class="text-justify">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio assumenda id, non totam laboriosam expedita cumque incidunt amet facere cupiditate?
+                        {{ $surface_user->current_address }}
                     </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold mr-lg-5 mr-0">Permanent Address:</span>
                     <span class="text-justify">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio assumenda id, non totam laboriosam expedita cumque incidunt amet facere cupiditate?
+                        {{ $surface_user->permanent_address ?? 'N.A' }}
                     </span>
                 </li>
             </ul>
@@ -73,18 +89,17 @@ Manage User
         </div>
         {{-- NOTE: id = 1 is a placeholder inside of the route params array, you'll have to pass dynamic data there, e.g. $user->id --}}
         <div class="card-body">
-            <form action="{{route('users.update', ['role'=>Auth::user()->role, 'id'=>1])}}" method="post">
+            <form action="{{route('users.update', ['role'=>Auth::user()->role, 'id'=>$surface_user->id])}}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="modNid">NID</label>
-                    <input type="text" name="" id="modNid" class="form-control">
+                    <input type="text" name="nid" value="{{ $surface_user->nid }}" id="modNid" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="modAccStatus">Account Status</label>
-                   <select name="" id="modAccStatus" class="form-control" required>
-                        <option >--SELECT--</option>
-                        <option value="0">Locked</option>
-                        <option value="1">Unlocked</option>
+                   <select name="locked" id="modAccStatus" class="form-control" required>
+                    <option @if($surface_user->locked == 0) selected @endif value="0">Locked</option>
+                    <option @if($surface_user->locked == 1) selected @endif value="1">Unlocked</option>
                    </select>
                 </div>
                 <div class="form-group">
