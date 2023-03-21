@@ -103,7 +103,8 @@ class ModeratorController extends Controller
      */
     public function show(string $id)
     {
-        return view('backend.admin.moderators.single');
+        $moderator = User::where('id', $id)->firstOrFail();
+        return view('backend.admin.moderators.single', compact('moderator'));
     }
 
     /**
@@ -119,7 +120,26 @@ class ModeratorController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'locked' =>'required',
+            'nid' =>'required|max:13|unique:users,nid,'.$id,
+        ]);
+
+        $moderator = User::where('id', $id)->firstOrFail();
+        $moderator->nid = $request->nid;
+        $moderator->locked = $request->locked;
+        $moderator->save();
+
+        if(!$moderator->wasChanged()){
+            return redirect()
+            ->route('admin.manage.moderators.all')
+            ->with('alert', $this->infoAlert('No Changes were Made!'));
+        }
+
+        return redirect()
+        ->route('admin.manage.moderators.all')
+        ->with('alert', $this->successAlert('Moderator info is Updated Successfully!!'));
+
     }
 
     /**

@@ -31,6 +31,7 @@ Route::prefix('/admin')
         Route::get('/account/{id}', 'show')->name('single');
         Route::get('/add', 'create')->name('add');
         Route::post('/store', 'store')->name('store');
+        Route::post('/update/{id}', 'update')->name('update');
     });
 
     Route::prefix('/manage/rent-types')
