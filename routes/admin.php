@@ -30,6 +30,7 @@ Route::prefix('/admin')
         Route::get('/', 'index')->name('all');
         Route::get('/account/{id}', 'show')->name('single');
         Route::get('/add', 'create')->name('add');
+        Route::post('/store', 'store')->name('store');
     });
 
     Route::prefix('/manage/rent-types')
