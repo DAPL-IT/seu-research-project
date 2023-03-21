@@ -15,7 +15,7 @@ class RentTypeController extends Controller
      */
     public function index()
     {
-        $rentTypes = RentType::orderBy('id', 'desc')->get();
+        $rentTypes = RentType::orderBy('status', 'desc')->orderBy('id', 'desc')->get();
         return view('backend.admin.rent_types.all', compact('rentTypes'));
     }
 

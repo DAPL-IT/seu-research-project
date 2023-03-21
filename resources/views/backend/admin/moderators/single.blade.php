@@ -43,23 +43,19 @@ Manage Moderator
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Account Locked ?:</span>
-                    <span class="badge badge-success">
-                        @if ($moderator->locked==1)
-                            NO
-                        @else
-                            YES
-                        @endif
-                    </span>
+                    @if ($moderator->locked==0)
+                    <span class="badge badge-success">NO</span>
+                    @else
+                    <span class="badge badge-danger">YES</span>
+                    @endif
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Is Online ?:</span>
-                    <span class="badge badge-danger">
-                        @if ($moderator->online==1)
-                            YES
-                        @else
-                            NO
-                        @endif
-                    </span>
+                    @if ($moderator->online==0)
+                    <span class="badge badge-danger">NO</span>
+                    @else
+                    <span class="badge badge-success">YES</span>
+                    @endif
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Joined:</span>
@@ -97,8 +93,8 @@ Manage Moderator
                 <div class="form-group">
                     <label for="modAccStatus">Account Status</label>
                     <select name="locked" id="modAccStatus" class="form-control" required>
-                        <option @if($moderator->locked == 0) selected @endif value="0">Locked</option>
-                        <option @if($moderator->locked == 1) selected @endif value="1">Unlocked</option>
+                        <option @if($moderator->locked == 0) selected @endif value="0">Unlocked</option>
+                        <option @if($moderator->locked == 1) selected @endif value="1">Locked</option>
                     </select>
                 </div>
                 <div class="form-group">

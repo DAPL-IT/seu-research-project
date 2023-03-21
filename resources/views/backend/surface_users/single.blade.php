@@ -43,23 +43,19 @@ Manage User
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Account Locked ?:</span>
-                    <span class="badge badge-success">
-                        @if ($surface_user->locked==1)
-                            NO
-                        @else
-                            YES
-                        @endif
-                    </span>
+                    @if ($surface_user->locked==0)
+                    <span class="badge badge-success">NO</span>
+                    @else
+                    <span class="badge badge-danger">YES</span>
+                    @endif
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Is Online ?:</span>
-                    <span class="badge badge-danger">
-                        @if ($surface_user->online==1)
-                            YES
-                        @else
-                            NO
-                        @endif
-                    </span>
+                    @if ($surface_user->online==0)
+                    <span class="badge badge-danger">NO</span>
+                    @else
+                    <span class="badge badge-success">YES</span>
+                    @endif
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Joined:</span>
@@ -87,7 +83,7 @@ Manage User
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Edit</h6>
         </div>
-        {{-- NOTE: id = 1 is a placeholder inside of the route params array, you'll have to pass dynamic data there, e.g. $user->id --}}
+
         <div class="card-body">
             <form action="{{route('users.update', ['role'=>Auth::user()->role, 'id'=>$surface_user->id])}}" method="post">
                 @csrf
@@ -98,8 +94,8 @@ Manage User
                 <div class="form-group">
                     <label for="modAccStatus">Account Status</label>
                    <select name="locked" id="modAccStatus" class="form-control" required>
-                    <option @if($surface_user->locked == 0) selected @endif value="0">Locked</option>
-                    <option @if($surface_user->locked == 1) selected @endif value="1">Unlocked</option>
+                    <option @if($surface_user->locked == 0) selected @endif value="0">Unlocked</option>
+                    <option @if($surface_user->locked == 1) selected @endif value="1">Locked</option>
                    </select>
                 </div>
                 <div class="form-group">

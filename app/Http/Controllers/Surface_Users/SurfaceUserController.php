@@ -21,7 +21,7 @@ class SurfaceUserController extends Controller
 
         if($request->ajax()){
             $users = DB::table('surface_users')
-            ->where('locked', 1)
+            ->where('locked', 0)
             ->orderBy('id', 'desc');
 
             $data = DataTables::of($users)
@@ -48,7 +48,7 @@ class SurfaceUserController extends Controller
 
         if($request->ajax()){
             $users = DB::table('surface_users')
-            ->where('locked', 0)
+            ->where('locked', 1)
             ->orderBy('id', 'desc');
 
             $data = DataTables::of($users)
@@ -67,39 +67,14 @@ class SurfaceUserController extends Controller
         return view('backend.surface_users.locked');
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      */
     public function show(Request $request)
     {
-        $user_id = $request->route('id');
+        $user_id = $request->id;
         $surface_user = SurfaceUser::where('id', $user_id)->firstOrFail();
         return view('backend.surface_users.single', compact('surface_user'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
@@ -107,14 +82,14 @@ class SurfaceUserController extends Controller
      */
     public function update(Request $request)
     {
-        $user_id = $request->route('id');
+        $user_id = $request->id;
+        $surface_user = SurfaceUser::where('id', $user_id)->firstOrFail();
 
         $request->validate([
             'locked' =>'required',
-            'nid' =>'required|max:13|unique:surface_users,nid,'.$user_id,
+            'nid' =>'nullable|max:13|unique:surface_users,nid,'. $surface_user->id,
         ]);
 
-        $surface_user = SurfaceUser::where('id', $user_id)->firstOrFail();
         $surface_user->nid = $request->nid;
         $surface_user->locked = $request->locked;
         $surface_user->save();
@@ -130,11 +105,4 @@ class SurfaceUserController extends Controller
         ->with('alert', $this->successAlert('User info is Updated Successfully!!'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
