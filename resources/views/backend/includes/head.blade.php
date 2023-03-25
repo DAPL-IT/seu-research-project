@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="{{asset('backend/vendor/toastr/toastr.css')}}">
 <link rel="stylesheet" href="{{asset('backend/vendor/datatables/dataTables.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('backend/vendor/datatables/responsive.bootstrap4.min.css')}}">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <style>
     .logout-btn{

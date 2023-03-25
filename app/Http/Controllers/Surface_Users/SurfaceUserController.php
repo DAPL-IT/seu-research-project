@@ -21,8 +21,7 @@ class SurfaceUserController extends Controller
 
         if($request->ajax()){
             $users = DB::table('surface_users')
-            ->where('locked', 0)
-            ->orderBy('id', 'desc');
+            ->where('locked', 0);
 
             $data = DataTables::of($users)
                     ->editColumn('id', '<span class="badge badge-dark">#{{$id}}</span>')
@@ -48,8 +47,7 @@ class SurfaceUserController extends Controller
 
         if($request->ajax()){
             $users = DB::table('surface_users')
-            ->where('locked', 1)
-            ->orderBy('id', 'desc');
+            ->where('locked', 1);
 
             $data = DataTables::of($users)
                     ->editColumn('id', '<span class="badge badge-dark">#{{$id}}</span>')

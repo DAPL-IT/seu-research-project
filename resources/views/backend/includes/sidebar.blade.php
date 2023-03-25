@@ -1,5 +1,5 @@
 <ul class="navbar-nav sidebar sidebar-light accordion d-flex pb-3" id="accordionSidebar">
-    <a class="sidebar-brand d-flex justify-content-start" href="@if(Auth::user()->role == 'admin') {{route('admin.dashboard')}} @else {{route('moderator.dashboard')}} @endif">
+    <a class="sidebar-brand d-flex justify-content-start" href="@if(Auth::user()->isAdmin()) {{route('admin.dashboard')}} @else {{route('moderator.dashboard')}} @endif">
       {{-- <div class="sidebar-brand-icon">
         <img src="img/logo/logo2.png">
       </div> --}}
@@ -7,7 +7,7 @@
     </a>
 
     <li class="nav-item">
-        <a class="nav-link" href="@if(Auth::user()->role == 'admin') {{route('admin.dashboard')}} @else {{route('moderator.dashboard')}} @endif">
+        <a class="nav-link" href="@if(Auth::user()->isAdmin()) {{route('admin.dashboard')}} @else {{route('moderator.dashboard')}} @endif">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
     </li>
@@ -16,7 +16,7 @@
         Operations
     </div>
 
-   @if (Auth::user()->role == 'admin')
+   @if (Auth::user()->isAdmin())
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMods" aria-expanded="false" aria-controls="collapseMods">
             <i class="fas fa-user-cog"></i>
@@ -45,7 +45,29 @@
         </div>
     </li>
 
-    @if(Auth::user()->role == 'admin')
+    @if(Auth::user()->isAdmin())
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDistricts" aria-expanded="false" aria-controls="collapseDistricts">
+            <i class="fas fa-map"></i>
+          <span>Districts</span>
+        </a>
+        <div id="collapseDistricts" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{route('admin.manage.districts.all')}}">Manage</a>
+          </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArea" aria-expanded="false" aria-controls="collapseArea">
+            <i class="fas fa-map-marker-alt"></i>
+          <span>Areas</span>
+        </a>
+        <div id="collapseArea" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{route('admin.manage.areas.all')}}">Manage</a>
+          </div>
+        </div>
+    </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRentTypes" aria-expanded="false" aria-controls="collapseRentTypes">
             <i class="fas fa-list"></i>

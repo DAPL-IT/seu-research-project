@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AreaController;
+use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\ModeratorController;
 use App\Http\Controllers\Admin\RentTypeController;
 use Illuminate\Support\Facades\Route;
@@ -43,4 +45,27 @@ Route::prefix('/admin')
         Route::post('/store', 'store')->name('store');
         Route::post('/update/{id}', 'update');
     });
+
+    Route::prefix('/manage/districts')
+    ->controller(DistrictController::class)
+    ->name('manage.districts.')
+    ->group(function(){
+        Route::get('/', 'index')->name('all');
+        Route::get('/edit/{id}', 'edit');
+        Route::post('/store', 'store')->name('add');
+        Route::post('/bulk-store', 'bulkStore')->name('bulk.store');
+        Route::post('/update/{id}', 'update');
+    });
+
+    Route::prefix('/manage/areas')
+    ->controller(AreaController::class)
+    ->name('manage.areas.')
+    ->group(function(){
+        Route::get('/', 'index')->name('all');
+        Route::get('/edit/{id}', 'edit');
+        Route::post('/store', 'store')->name('add');
+        Route::post('/bulk-store', 'bulkStore')->name('bulk.store');
+        Route::post('/update/{id}', 'update');
+    });
+
 });

@@ -41,7 +41,10 @@ class RentTypeController extends Controller
      */
     public function edit(string $id)
     {
-        $rentType = RentType::findOrFail($id);
+        $rentType = RentType::find($id);
+        if(is_null($rentType)){
+            return response()->json(['msg' => 'Type Not Found!'], 404);
+        }
         return response()->json($rentType, 200);
     }
 

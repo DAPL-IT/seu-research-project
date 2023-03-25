@@ -20,8 +20,7 @@ class ModeratorController extends Controller
     {
         if($request->ajax()){
             $moderators = DB::table('users')
-            ->where('role', 'moderator')
-            ->orderBy('id', 'desc');
+            ->where('role', 'moderator');
 
             $data = DataTables::of($moderators)
                     ->editColumn('id', '<span class="badge badge-dark">#{{$id}}</span>')
