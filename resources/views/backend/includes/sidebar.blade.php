@@ -22,7 +22,7 @@
             <i class="fas fa-user-cog"></i>
         <span>Moderators</span>
         </a>
-        <div id="collapseMods" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar" style="">
+        <div id="collapseMods" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar" >
         <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{{route('admin.manage.moderators.all')}}">View All</a>
             <a class="collapse-item" href="{{route('admin.manage.moderators.add')}}">Add New</a>
@@ -37,7 +37,7 @@
             <i class="fas fa-user-friends"></i>
         <span>Users</span>
         </a>
-        <div id="collapseAdPosters" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
+        <div id="collapseAdPosters" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" >
         <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{{route('users.show', ['role'=>Auth::user()->role])}}">View All</a>
             <a class="collapse-item" href="{{route('users.locked', ['role'=>Auth::user()->role])}}">Locked Users</a>
@@ -51,7 +51,7 @@
             <i class="fas fa-map"></i>
           <span>Districts</span>
         </a>
-        <div id="collapseDistricts" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
+        <div id="collapseDistricts" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" >
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{{route('admin.manage.districts.all')}}">Manage</a>
           </div>
@@ -62,7 +62,7 @@
             <i class="fas fa-map-marker-alt"></i>
           <span>Areas</span>
         </a>
-        <div id="collapseArea" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
+        <div id="collapseArea" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" >
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{{route('admin.manage.areas.all')}}">Manage</a>
           </div>
@@ -73,9 +73,20 @@
             <i class="fas fa-list"></i>
           <span>Rent Types</span>
         </a>
-        <div id="collapseRentTypes" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
+        <div id="collapseRentTypes" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" >
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{{route('admin.manage.rent_types.all')}}">Manage</a>
+          </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOperations" aria-expanded="false" aria-controls="collapseOperations">
+            <i class="fas fa-tools"></i>
+          <span>Operations</span>
+        </a>
+        <div id="collapseOperations" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" >
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{route('admin.manage.rent.classifications.all')}}">Rent Classification</a>
           </div>
         </div>
     </li>
@@ -86,7 +97,7 @@
             <i class="fas fa-ad"></i>
           <span>Rent Ads</span>
         </a>
-        <div id="collapseRentAds" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" style="">
+        <div id="collapseRentAds" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" >
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="">Approved</a>
             <a class="collapse-item" href="">Pendings</a>
