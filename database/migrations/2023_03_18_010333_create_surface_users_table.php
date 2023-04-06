@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone', 15)->nullable();
             $table->string('nid')->nullable();
             $table->string('image')->nullable();
-            $table->unsignedTinyInteger('locked')->default(1)->comment('0=user is locked, 1=user can access facilities');
+            $table->unsignedTinyInteger('locked')->default(0)->comment('1=user is locked, 0=user can access facilities');
             $table->unsignedTinyInteger('online')->default(0)->comment('0=user is not online, 1 = user is online');
             $table->string('token')->nullable()->comment('It can be used as pwd reset token and email verification token');
             $table->timestamp('email_verified_at')->nullable();

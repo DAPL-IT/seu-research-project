@@ -15,7 +15,7 @@ class RentTypeController extends Controller
      */
     public function index()
     {
-        $rentTypes = RentType::orderBy('id', 'desc')->get();
+        $rentTypes = RentType::orderBy('status', 'desc')->orderBy('id', 'desc')->get();
         return view('backend.admin.rent_types.all', compact('rentTypes'));
     }
 
@@ -41,7 +41,10 @@ class RentTypeController extends Controller
      */
     public function edit(string $id)
     {
-        $rentType = RentType::findOrFail($id);
+        $rentType = RentType::find($id);
+        if(is_null($rentType)){
+            return response()->json(['msg' => 'Type Not Found!'], 404);
+        }
         return response()->json($rentType, 200);
     }
 

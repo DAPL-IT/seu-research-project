@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Traits\WebAlertTrait;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -21,8 +20,7 @@ class ModeratorController extends Controller
     {
         if($request->ajax()){
             $moderators = DB::table('users')
-            ->where('role', 'moderator')
-            ->orderBy('id', 'desc');
+            ->where('role', 'moderator');
 
             $data = DataTables::of($moderators)
                     ->editColumn('id', '<span class="badge badge-dark">#{{$id}}</span>')
@@ -32,7 +30,7 @@ class ModeratorController extends Controller
                         return '<img src="'.asset($image).'" alt="" class="table-image">';
                     })
                     ->editColumn('locked', function ($row){
-                        $status = $row->locked == 0 ? 'YES' : 'NO';
+                        $status = $row->locked == 0 ? 'NO' : 'YES';
                         $color = ['YES'=> 'danger', 'NO'=> 'success'];
                         return '<span class="badge badge-'.$color[$status].'">'.$status.'</span>';
                     })
@@ -74,28 +72,27 @@ class ModeratorController extends Controller
             'name' =>'required|min:3|max:150',
             'email' =>'required|email|unique:users,email',
             'phone' => 'required|max:15|unique:users,phone',
-            'nid' => 'required|max:13|unique:users,nid',
+            'nid' => 'nullable|max:13|unique:users,nid',
             'password' => 'required|min:8|max:32',
             'current_address' => 'required|max:250',
             'permanent_address' => 'nullable|max:250'
         ]);
 
-        $auth_admin = Auth::user();
-        if($auth_admin && $auth_admin->role=='admin'){
-            $moderator = new User();
-            $moderator->name = $request->name;
-            $moderator->email = $request->email;
-            $moderator->phone = $request->phone;
-            $moderator->nid = $request->nid;
-            $moderator->password = Hash::make($request->password);
-            $moderator->current_address = $request->current_address;
-            $moderator->permanent_address = $request->permanent_address;
-            $moderator->role = 'moderator';
+        $moderator = new User();
+        $moderator->name = $request->name;
+        $moderator->email = $request->email;
+        $moderator->phone = $request->phone;
+        $moderator->nid = $request->nid;
+        $moderator->password = Hash::make($request->password);
+        $moderator->current_address = $request->current_address;
+        $moderator->permanent_address = $request->permanent_address;
+        $moderator->role = 'moderator';
 
-            $moderator->save();
-            return redirect()->route('admin.manage.moderators.all')
-            ->with('alert',$this->successAlert('Moderator is created Successfully!!'));
-        }
+        $moderator->save();
+
+        return redirect()->route('admin.manage.moderators.all')
+        ->with('alert',$this->successAlert('Moderator is created Successfully!!'));
+
     }
 
     /**
@@ -108,45 +105,29 @@ class ModeratorController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
+        $moderator = User::where('id', $id)->firstOrFail();
+
         $request->validate([
             'locked' =>'required',
-            'nid' =>'required|max:13|unique:users,nid,'.$id,
+            'nid' =>'nullable|max:13|unique:users,nid,'.$moderator->id,
         ]);
 
-        $moderator = User::where('id', $id)->firstOrFail();
         $moderator->nid = $request->nid;
         $moderator->locked = $request->locked;
         $moderator->save();
 
         if(!$moderator->wasChanged()){
-            return redirect()
-            ->route('admin.manage.moderators.all')
+            return back()
             ->with('alert', $this->infoAlert('No Changes were Made!'));
         }
 
-        return redirect()
-        ->route('admin.manage.moderators.all')
+        return back()
         ->with('alert', $this->successAlert('Moderator info is Updated Successfully!!'));
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

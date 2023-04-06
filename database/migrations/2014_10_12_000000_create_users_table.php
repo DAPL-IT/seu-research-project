@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('current_address')->nullable();
             $table->string('permanent_address')->nullable();
             $table->string('role');
-            $table->unsignedTinyInteger('locked')->default(1)->comment('0=user is locked, 1=user can access facilities');
+            $table->unsignedTinyInteger('locked')->default(0)->comment('1=user is locked, 0=user can access facilities');
             $table->unsignedTinyInteger('online')->default(0)->comment('0=user is not online, 1 = user is online');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

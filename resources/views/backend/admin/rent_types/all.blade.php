@@ -9,7 +9,7 @@ Manage Rent Types
 @endsection
 
 @section('main')
-<div class="col-lg-8">
+<div class="col-xl-8">
     <div class="card mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">All Rent Types</h6>
@@ -51,7 +51,7 @@ Manage Rent Types
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="rentTypeModal" tabindex="-1" role="dialog" aria-labelledby="rentTypeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="rentTypeModal" role="dialog" aria-labelledby="rentTypeModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -65,7 +65,7 @@ Manage Rent Types
                 <form action="" method="post" id="rentTypeEditForm" class="d-none">
                     @csrf
                     <div class="form-group">
-                        <label for="rentType">Type</label>
+                        <label for="rentTypeEditInput">Type</label>
                         <input type="text" name="type" id="rentTypeEditInput" class="form-control">
                     </div>
 
@@ -88,7 +88,7 @@ Manage Rent Types
 
 </div>
 
-<div class="col-lg-4">
+<div class="col-xl-4">
     <div class="card mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Add New</h6>
@@ -102,7 +102,7 @@ Manage Rent Types
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-sm btn-primary mt-4"><i class="fas fa-plus"></i>&ensp;Submit</button>
+                    <button class="btn btn-sm btn-primary mt-2"><i class="fas fa-plus"></i>&ensp;Submit</button>
                 </div>
             </form>
         </div>
@@ -122,12 +122,12 @@ Manage Rent Types
                 .done(function(data){
                     $('#apiFetchStatus').text('');
                     $('#rentTypeEditInput').val(data.type);
-                    $('#rentTypeStatus').val(data.status);
+                    $('#rentTypeStatus').val(data.status).trigger('change');
                     $('#rentTypeEditForm').attr('action', `rent-types/update/${id}`)
                     $('#rentTypeEditForm').removeClass('d-none');
                 })
                 .fail(function(err){
-                    $('#apiFetchStatus').text('Error Occured!');
+                    $('#apiFetchStatus').text('Error: '+err.status+' '+err.responseJSON.msg);
                 });
             });
 
