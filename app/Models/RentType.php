@@ -22,4 +22,8 @@ class RentType extends Model
             set: fn ($value) => ucwords(strtolower($value))
         );
     }
+
+    public function rent_ads(){
+        return $this->hasMany(RentAd::class, 'rent_type_id', 'id')->with(['area', 'poster', 'moderator']);
+    }
 }

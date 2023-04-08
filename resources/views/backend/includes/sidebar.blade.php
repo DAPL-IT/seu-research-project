@@ -99,9 +99,15 @@
         </a>
         <div id="collapseRentAds" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" >
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="">Approved</a>
-            <a class="collapse-item" href="">Pendings</a>
-            <a class="collapse-item" href="">Rejected</a>
+            @if(Auth::user()->isAdmin())
+            <a class="collapse-item" href="{{ route('admin.manage.rent_ads.all', ['status'=>'approved']) }}">Approved</a>
+            <a class="collapse-item" href="{{ route('admin.manage.rent_ads.all', ['status'=>'pending']) }}">Pendings</a>
+            <a class="collapse-item" href="{{ route('admin.manage.rent_ads.all', ['status'=>'rejected']) }}">Rejected</a>
+            @else
+            <a class="collapse-item" href="{{ route('moderator.manage.rent_ads.all', ['status'=>'approved']) }}">Approved</a>
+            <a class="collapse-item" href="{{ route('moderator.manage.rent_ads.all', ['status'=>'pending']) }}">Pendings</a>
+            <a class="collapse-item" href="{{ route('moderator.manage.rent_ads.all', ['status'=>'rejected']) }}">Rejected</a>
+            @endif
           </div>
         </div>
     </li>

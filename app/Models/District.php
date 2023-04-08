@@ -26,6 +26,6 @@ class District extends Model
     }
 
     public function areas(){
-        return $this->hasMany(Area::class, 'district_id', 'id');
+        return $this->hasMany(Area::class, 'district_id', 'id')->with(['rent_ads']);
     }
 }
