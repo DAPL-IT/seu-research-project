@@ -65,4 +65,8 @@ class User extends Authenticatable
         return $this->attributes['role'] === User::MODERATOR;
     }
 
+    public function rent_ads(){
+        return $this->hasMany(RentAd::class, 'moderator_id', 'id')->with(['poster', 'rent_type', 'area']);
+    }
+
 }

@@ -34,4 +34,8 @@ class SurfaceUser extends Model
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function rent_ads(){
+        return $this->hasMany(RentAd::class, 'poster_id', 'id')->with(['area', 'rent_type', 'moderator']);
+    }
 }

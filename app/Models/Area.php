@@ -30,4 +30,8 @@ class Area extends Model
     public function district(){
         return $this->belongsTo(District::class, 'district_id', 'id');
     }
+
+    public function rent_ads(){
+        return $this->hasMany(RentAd::class, 'area_id', 'id')->with(['poster', 'rent_type']);
+    }
 }

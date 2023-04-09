@@ -29,15 +29,20 @@
         outline: none;
     }
     .table-image{
-        width: 50px;
-        height: 50px;
+        max-width: 50px;
+        max-width: 50px;
         border: 2px solid rgba(128, 128, 128, 0.5);
         border-radius: 50%;
     }
 
     .profile-image-container{
-        width: 150px;
-        height: 150px;
+        max-width: 150px;
+        max-width: 150px;
+    }
+
+    .rent-ad-image-container{
+        max-width: 200px;
+        max-height: 2000px;
     }
 
     .profile-image{
