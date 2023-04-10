@@ -53,32 +53,32 @@ Manage Rent Ad
                         <span class="badge badge-info">Pending</span>
                     </span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
-                    <span class="font-weight-bold">District:</span>
-                    <span class="text-break">
 
-                    </span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
-                    <span class="font-weight-bold">Area:</span>
-                    <span class="text-break">
-                    </span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
-                    <span class="font-weight-bold">Full Address:</span>
-                    <span class="text-break"></span>
+                <li class="list-group-item d-flex flex-column">
+                    <span class="font-weight-bold">Address:</span>
+                    <span class="text-break">District + Area + Full Address At once by comma seperated, e.g. District: Dhaka, Area: Badda, Location: Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, doloribus!</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
                     <span class="font-weight-bold">Posted By:</span>
                     <span class="text-break"></span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
-                    <span class="font-weight-bold">Date Posted:</span>
-                    <span class="text-break"></span>
+                <li class="list-group-item d-flex align-items-center flex-lg-row flex-column">
+                    <span class="font-weight-bold">Timeline:</span>
+                    <span class="text-break">
+                        <span class="badge badge-primary ml-2">Posted: 1/2/2020</span>
+                    </span>
+                    <span class="text-break">
+                        <span class="badge badge-primary ml-2">Updated: 1/2/2020</span>
+                    </span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-lg-row flex-column">
-                    <span class="font-weight-bold">Last Updated:</span>
-                    <span class="text-break"></span>
+                <li class="list-group-item d-flex flex-column">
+                    <span class="font-weight-bold mb-2">Externals:</span>
+                    <span class="text-break">
+                        <small>Video URL:&ensp; <a href="">Link Here</a> </small>
+                    </span>
+                    <span class="text-break">
+                        <small>Map URL:&ensp; <a href="">Link Here</a> </small>
+                    </span>
                 </li>
                 <li class="list-group-item d-flex flex-column">
                     <span class="font-weight-bold mb-2">Description:</span>

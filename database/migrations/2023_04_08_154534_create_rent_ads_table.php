@@ -24,6 +24,8 @@ return new class extends Migration
             $table->unsignedTinyInteger('status')->comment('1 = approved, 2 = pending, 0 = rejected, 3 = changes are required')->default(2);
             $table->boolean('is_featured')->nullable();
             $table->boolean('sold_on_site')->nullable();
+            $table->text('map_url')->nullable();
+            $table->text('video_url')->nullable();
 
             $table->unsignedSmallInteger('rent_type_id');
             $table->unsignedBigInteger('area_id');
