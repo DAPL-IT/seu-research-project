@@ -108,12 +108,40 @@ Manage Rent Ad
                         <option value="3">Modifications Required</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-sm mt-3 " type="submit"><i class="fas fa-edit"></i>&ensp;Update</button>
+                <div class="form-group mt-3">
+                    <a href="" class="btn btn-danger btn-sm delete-btn"><i class="fas fa-trash"></i>&ensp;Delete Ad</a>
+                    <button class="btn btn-primary btn-sm " type="submit"><i class="fas fa-edit"></i>&ensp;Update</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('extra_scripts')
+<script>
+$(document).ready(function(){
+
+    $('.delete-btn').on('click', function (e) {
+        e.preventDefault();
+        const url = $(this).attr('href');
+
+        Swal.fire({
+            title: 'Want to Delete?',
+            text: "You won't be able to revert this operation!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Delete'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    });
+});
+</script>
 
 @endsection
