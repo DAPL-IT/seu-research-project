@@ -153,7 +153,7 @@ $(document).ready(function(){
         const url = $(this).attr('href');
 
         Swal.fire({
-            title: 'Are you sure?',
+            title: 'Want to Delete?',
             text: "You won't be able to revert this operation!",
             icon: 'warning',
             showCancelButton: true,
