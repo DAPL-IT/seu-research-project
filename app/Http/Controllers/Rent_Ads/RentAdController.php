@@ -7,9 +7,12 @@ use App\Models\RentAd;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\WebAlertTrait;
 
 class RentAdController extends Controller
 {
+    use WebAlertTrait;
+
     private $status = [
         'rejected' => 0,
         'approved' => 1,
@@ -117,6 +120,7 @@ class RentAdController extends Controller
     public function show(Request $request)
     {   $requestId = $request->id;
         $rentAd = RentAd::with('rent_type', 'poster', 'moderator', 'area')->findOrFail($requestId);
+        //dd($rentAd);
         return view('backend.rent_ads.single', compact('rentAd'));
     }
 
@@ -127,6 +131,9 @@ class RentAdController extends Controller
     {
         $requestId = $request->id;
         $rentAd = RentAd::findOrFail($requestId);
+        $rentAd->status = $request->status;
+        $rentAd->save();
+        return redirect()->back()->with('alert', $this->successAlert('Updated Successfully!!'));
     }
 
     /**

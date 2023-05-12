@@ -32,7 +32,7 @@ class RentAd extends Model
     }
 
     public function area(){
-        return $this->belongsTo(Area::class, 'area_id', 'id');
+        return $this->belongsTo(Area::class, 'area_id', 'id')->with(['district']);
     }
 
     public function poster(){
