@@ -86,7 +86,7 @@
         </a>
         <div id="collapseOperations" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar" >
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{route('admin.manage.rent.classifications.all')}}">Rent Classification</a>
+            <a class="collapse-item" href="{{route('admin.manage.rent.classifications.all')}}">Rent Range Labels</a>
           </div>
         </div>
     </li>
