@@ -11,7 +11,7 @@ Dashboard
 @section('main')
 
     <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="col-xl-3 col-md-6 mb-4">
         <div class="card h-100">
           <div class="card-body">
             <div class="row align-items-center">
@@ -87,6 +87,32 @@ Dashboard
                 <i class="fas fa-comments fa-2x text-warning"></i>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+          </div>
+          <div class="card-body">
+            <div class="chart-pie pt-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+              <canvas id="myPieChart" style="display: block; height: 253px; width: 223px;" class="chartjs-render-monitor" width="278" height="316"></canvas>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+          </div>
+          <div class="card-body">
+            <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+              <canvas id="myBarChart" style="display: block; height: 320px; width: 510px;" class="chartjs-render-monitor" width="637" height="400"></canvas>
+            </div>
+
           </div>
         </div>
       </div>
