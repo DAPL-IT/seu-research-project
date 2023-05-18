@@ -106,6 +106,9 @@ Manage Rent Ad
         </div>
 
         <div class="card-body">
+            @php
+                $auth_user = Auth::user()->role;
+            @endphp
             <form action="{{route('manage.rent_ads.update', ['role'=>Auth::user()->role, 'id'=>$rentAd->id])}}" method="post">
                 @csrf
                 <div class="form-group">
@@ -169,7 +172,7 @@ $(document).ready(function(){
             confirmButtonText: 'Delete'
             }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = url;
+                window.location.href = "<?php echo URL::to($auth_user.'/manage/rent-ads/delete/'.$rentAd->id); ?>";
             }
         });
     });
