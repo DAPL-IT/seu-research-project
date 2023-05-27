@@ -42,7 +42,11 @@
                     </li>
                     <li class="nav-item text">
                         <div class="nav-link">
-                            <a href="" class="text-light">Login</a>
+                            <RouterLink
+                                :to="{ name: 'login' }"
+                                class="text-light"
+                                >Login</RouterLink
+                            >
                             /
                             <a href="" class="text-light">Register</a>
                         </div>
@@ -76,66 +80,12 @@
             </div>
         </div>
     </nav>
-    <!-- <nav
-        class="navbar navbar-default navbar-trans navbar-expand-lg"
-        id="main-nav-container"
-    >
-        <div class="container">
-            <button
-                class="navbar-toggler collapsed"
-                type="button"
-                ref="navTogglerBtn"
-                @click="handleNavMenuToggler"
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            <a class="navbar-brand text-brand" href="index.html"
-                >App<span class="color-b">Name</span></a
-            >
-            <button
-                type="button"
-                class="btn btn-link nav-search navbar-toggle-box-collapse d-md-none"
-                @click="handleSearchBarToggler"
-            >
-                <span class="fa fa-search" aria-hidden="true"></span>
-            </button>
-
-            <div
-                class="navbar-collapse collapse justify-content-end mr-5"
-                ref="mainNav"
-            >
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">FAQ</a>
-                    </li>
-                </ul>
-            </div>
-            <button
-                type="button"
-                class="btn btn-b-n navbar-toggle-box-collapse d-none d-md-block"
-                @click="handleSearchBarToggler"
-            >
-                <span class="fa fa-search" aria-hidden="true"></span>
-            </button>
-        </div>
-    </nav> -->
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { RouterLink } from "vue-router";
 import { useSearchBarTogglerStore } from "../stores/SearchBarTogglerStore";
 
-const navTogglerBtn = ref(null);
-const mainNav = ref(null);
 const bodyElem = document.querySelector("body");
 
 const searchBarTogglerStore = useSearchBarTogglerStore();
