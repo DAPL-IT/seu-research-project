@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\RentClassificationController;
 use App\Http\Controllers\Admin\RentTypeController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('/admin')
+Route::prefix('/cms/admin')
 ->middleware(['auth', 'role:admin'])
 ->name('admin.')
 ->group(function () {

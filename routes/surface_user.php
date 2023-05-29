@@ -3,7 +3,7 @@
 use App\Http\Controllers\Surface_Users\SurfaceUserController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('{role}/manage/users')
+Route::prefix('/cms/{role}/manage/users')
 ->middleware(['auth'])
 ->name('users.')
 ->group(function () {

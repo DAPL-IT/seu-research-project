@@ -1,7 +1,9 @@
 <template>
     <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <RouterLink :to="{ name: 'home' }" class="navbar-brand"
+                >Navbar</RouterLink
+            >
             <button
                 class="navbar-toggler bg-light btn-light"
                 type="button"
@@ -17,7 +19,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
+                        <RouterLink :to="{ name: 'home' }" class="nav-link"
+                            >Home</RouterLink
+                        >
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
@@ -40,19 +44,7 @@
                             ></span>
                         </button>
                     </li>
-                    <li class="nav-item text">
-                        <div class="nav-link">
-                            <RouterLink
-                                :to="{ name: 'login' }"
-                                class="text-light"
-                                >Login</RouterLink
-                            >
-                            /
-                            <a href="" class="text-light">Register</a>
-                        </div>
-                    </li>
-
-                    <!-- <li class="nav-item dropdown">
+                    <li v-if="loginStore.isLoggedIn" class="nav-item dropdown">
                         <a
                             class="nav-link dropdown-toggle"
                             href="#"
@@ -65,17 +57,33 @@
                             Dropdown
                         </a>
                         <div
-                            class="dropdown-menu"
+                            class="dropdown-menu dropdown-menu-right"
                             aria-labelledby="navbarDropdown"
                         >
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="#">My Ads</a>
+                            <a class="dropdown-item" href="#">Post New</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"
-                                >Something else here</a
+                            <button
+                                class="dropdown-item"
+                                id="logout-btn"
+                                @click="handleLogoutClick"
                             >
+                                Logout
+                            </button>
                         </div>
-                    </li> -->
+                    </li>
+                    <li v-else class="nav-item text">
+                        <div class="nav-link">
+                            <RouterLink
+                                :to="{ name: 'login' }"
+                                class="text-light"
+                                >Login</RouterLink
+                            >
+                            /
+                            <a href="" class="text-light">Register</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -85,14 +93,34 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { useSearchBarTogglerStore } from "../stores/SearchBarTogglerStore";
+import { useLoginStore } from "../stores/LoginStore";
+import toaster from "../composables/Toaster";
 
 const bodyElem = document.querySelector("body");
-
 const searchBarTogglerStore = useSearchBarTogglerStore();
+const loginStore = useLoginStore();
 
 const handleSearchBarToggler = () => {
     searchBarTogglerStore.isOpen = true;
-    console.log(searchBarTogglerStore.is_open);
     bodyElem.classList.add("box-collapse-open");
 };
+
+const handleLogoutClick = () => {
+    loginStore
+        .logout()
+        .then((d) => {
+            toaster.info(d);
+        })
+        .catch((e) => {
+            // console.log(e)
+        });
+};
 </script>
+
+<style lang="css" scoped>
+#logout-btn:focus {
+    outline: none !important;
+    background: rgba(128, 128, 128, 0.166) !important;
+    color: black;
+}
+</style>

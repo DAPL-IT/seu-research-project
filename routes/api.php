@@ -43,4 +43,10 @@ use Illuminate\Support\Facades\DB;
 // });
 
 
-Route::post('/surface-user-login', [SurfaceUserAuthController::class, 'login']);
+Route::post('/surface-user-login', [SurfaceUserAuthController::class, 'login'])->name('surface_user_login');
+
+
+
+Route::middleware(['auth:sanctum'])->group(function(){
+    Route::post('/surface-user-logout', [SurfaceUserAuthController::class, 'logout'])->name('surface_user_logout');
+});
