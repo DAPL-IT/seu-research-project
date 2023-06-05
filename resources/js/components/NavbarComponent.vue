@@ -2,8 +2,8 @@
     <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <RouterLink :to="{ name: 'home' }" class="navbar-brand"
-                >Navbar</RouterLink
-            >
+                ><img src="../assets/logo.jpg" alt="logo"
+            /></RouterLink>
             <button
                 class="navbar-toggler bg-light btn-light"
                 type="button"
@@ -54,7 +54,7 @@
                             aria-haspopup="true"
                             aria-expanded="false"
                         >
-                            Dropdown
+                            {{ loginStore.user.name }}
                         </a>
                         <div
                             class="dropdown-menu dropdown-menu-right"

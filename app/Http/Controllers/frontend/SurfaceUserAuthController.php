@@ -55,11 +55,11 @@ class SurfaceUserAuthController extends Controller
     }
 
     public function logout(Request $request){
-        $user = SurfaceUser::where('email', $request->email)->first();
+        $user = Auth::user();
         $user->tokens()->delete();
-        $response = [
-            'message' => 'Logged Out'
-        ];
+        Auth::guard('surface_user')->logout();
+
+        $response = ['message' => 'Logged Out'];
 
         return response()->json($response, 200);
     }

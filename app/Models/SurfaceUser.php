@@ -11,6 +11,8 @@ class SurfaceUser extends Authenticatable
 {
     use HasApiTokens, HasFactory, SoftDeletes;
 
+    protected $guard = 'surface_user';
+
     protected $fillable = [
         'name',
         'email',

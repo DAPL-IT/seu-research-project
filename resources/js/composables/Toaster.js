@@ -4,7 +4,7 @@ class Toaster {
     constructor() {
         this.toaster = Swal.mixin({
             toast: true,
-            position: "top-right",
+            position: "top",
             iconColor: "white",
             customClass: {
                 popup: "colored-toast",

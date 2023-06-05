@@ -22,7 +22,6 @@ API.interceptors.request.use((config) => {
         config.headers.Authorization = `Bearer ${storage.get(
             "surface_user_auth_token"
         )}`;
-        config.data = { email: loginStore.user.email };
     }
     return config;
 });
