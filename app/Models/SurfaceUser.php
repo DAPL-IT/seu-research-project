@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 class SurfaceUser extends Authenticatable
 {
     use HasApiTokens, HasFactory, SoftDeletes;
+    public const SURFACE_USER_IMAGE_DIR = 'images/surface_user/';
 
     protected $guard = 'surface_user';
 

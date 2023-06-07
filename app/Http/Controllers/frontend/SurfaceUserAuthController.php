@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\SurfaceUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 class SurfaceUserAuthController extends Controller
@@ -62,5 +64,54 @@ class SurfaceUserAuthController extends Controller
         $response = ['message' => 'Logged Out'];
 
         return response()->json($response, 200);
+    }
+
+    public function register (Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:surface_users,email',
+            'password' => 'required',
+            'confirm_password' => 'required|same:password'
+        ]);
+
+        if($validator->fails()){
+            $response = [
+                'success' => false,
+                'validation' => $validator->errors()
+            ];
+            return response()->json($response, 422);
+        }
+
+        $input = $request->all();
+
+        if($request->hasFile('image')){
+            $location  = SurfaceUser::SURFACE_USER_IMAGE_DIR;
+            $imageFile = $request->file('image');
+            $imageName = Str::random(16).'_dt_'.date('Ymd_His').'.'.$imageFile->getClientOriginalExtension();
+
+            Image::make($imageFile)
+            ->fit(150,150, function($constraint){
+                $constraint->upsize();
+            })->save($location.$imageName);
+
+            $input['image'] = $location.$imageName;
+        }
+
+        $input['password'] = bcrypt($input['password']);
+        $user = SurfaceUser::create($input);
+
+        $token = $user
+                ->createToken('surface_user_auth_token')
+                ->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Registered Successfully',
+            'surface_user' => $user->only(["id",
+            "name",
+            "email"]),
+            'surface_user_auth_token' => $token
+        ], 200);
     }
 }
