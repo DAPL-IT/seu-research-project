@@ -15,6 +15,7 @@ class User extends Authenticatable
 
     public const ADMIN = 'admin';
     public const MODERATOR = 'moderator';
+    public const SURFACE = 'surface';
     public const ADMIN_IMAGE_DIR = 'images/admin/';
     public const MODERATOR_IMAGE_DIR = 'images/moderator/';
 
@@ -63,6 +64,10 @@ class User extends Authenticatable
 
     public function isModerator() : bool {
         return $this->attributes['role'] === User::MODERATOR;
+    }
+
+    public function isUser() : bool {
+        return $this->attributes['role'] === User::SURFACE;
     }
 
     public function rent_ads(){

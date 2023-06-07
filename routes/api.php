@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\frontend\SurfaceUserAuthController;
+use App\Http\Controllers\Surface_Users\SurfaceUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\RentType;
@@ -9,9 +11,9 @@ use App\Models\SurfaceUser;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 // Route::get('/districts', function(){
 //     $areas = District::select('id','name')->orderBy('name', 'asc')->get();
@@ -39,3 +41,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //     return $data;
 // });
+
+
+Route::post('/surface-user-login', [SurfaceUserAuthController::class, 'login'])->name('surface_user_login');
+
+Route::middleware(['auth:sanctum'])->group(function(){
+    Route::post('/surface-user-logout', [SurfaceUserAuthController::class, 'logout'])->name('surface_user_logout');
+});

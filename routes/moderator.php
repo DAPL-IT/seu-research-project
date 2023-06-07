@@ -4,7 +4,7 @@ use App\Http\Controllers\Moderator\ModeratorDashboardController;
 use App\Http\Controllers\Moderator\ModeratorProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('/moderator')
+Route::prefix('/cms/moderator')
 ->middleware(['auth', 'role:moderator'])
 ->name('moderator.')
 ->group(function () {
