@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Rent_Ads\RentAdController;
 
-Route::middleware(['auth'])
+Route::prefix('/cms')
+->middleware(['auth'])
 ->group(function () {
 
     Route::controller(RentAdController::class)

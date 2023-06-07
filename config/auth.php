@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'surface_user' => [
+            'driver' => 'session',
+            'provider' => 'surface_users',
+        ]
     ],
 
     /*
@@ -63,6 +67,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'surface_users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\SurfaceUser::class,
         ],
 
         // 'users' => [
