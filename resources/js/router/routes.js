@@ -36,6 +36,12 @@ const router = createRouter({
             beforeEnter: redirectIfAlredyLoggedIn,
         },
         {
+            path: "/register",
+            name: "register",
+            component: () => import("../views/RegisterView.vue"),
+            beforeEnter: redirectIfAlredyLoggedIn,
+        },
+        {
             path: "/:catchAll(.*)",
             name: "not_found",
             component: () => import("../views/NotFoundView.vue"),

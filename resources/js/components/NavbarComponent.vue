@@ -81,7 +81,11 @@
                                 >Login</RouterLink
                             >
                             /
-                            <a href="" class="text-light">Register</a>
+                            <RouterLink
+                                :to="{ name: 'register' }"
+                                class="text-light"
+                                >Register</RouterLink
+                            >
                         </div>
                     </li>
                 </ul>

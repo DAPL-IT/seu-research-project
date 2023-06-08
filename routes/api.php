@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\frontend\SurfaceUserAuthController;
+use App\Http\Controllers\Frontend\SurfaceUserAuthController;
 use App\Http\Controllers\Surface_Users\SurfaceUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

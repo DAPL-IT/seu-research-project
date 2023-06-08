@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SurfaceUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class SurfaceUserAuthController extends Controller
@@ -69,49 +68,36 @@ class SurfaceUserAuthController extends Controller
     public function register (Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|min:3|max:60',
             'email' => 'required|email|unique:surface_users,email',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password'
+            'password' => 'required|min:8|confirmed',
         ]);
 
         if($validator->fails()){
-            $response = [
-                'success' => false,
-                'validation' => $validator->errors()
-            ];
+            $response = ['validation' => $validator->errors()];
             return response()->json($response, 422);
         }
 
-        $input = $request->all();
+        $surfaceUser = new SurfaceUser();
+        $surfaceUser->name = $request->name;
+        $surfaceUser->email = $request->email;
+        $surfaceUser->password = Hash::make( $request->password);
 
-        if($request->hasFile('image')){
-            $location  = SurfaceUser::SURFACE_USER_IMAGE_DIR;
-            $imageFile = $request->file('image');
-            $imageName = Str::random(16).'_dt_'.date('Ymd_His').'.'.$imageFile->getClientOriginalExtension();
+        $surfaceUser->save();
 
-            Image::make($imageFile)
-            ->fit(150,150, function($constraint){
-                $constraint->upsize();
-            })->save($location.$imageName);
-
-            $input['image'] = $location.$imageName;
-        }
-
-        $input['password'] = bcrypt($input['password']);
-        $user = SurfaceUser::create($input);
-
-        $token = $user
-                ->createToken('surface_user_auth_token')
-                ->plainTextToken;
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Registered Successfully',
-            'surface_user' => $user->only(["id",
-            "name",
-            "email"]),
-            'surface_user_auth_token' => $token
-        ], 200);
+        return response()->json(['message' => 'Registered Successfully',], 201);
     }
 }
+
+// if($request->hasFile('image')){
+//     $location  = SurfaceUser::SURFACE_USER_IMAGE_DIR;
+//     $imageFile = $request->file('image');
+//     $imageName = Str::random(16).'_dt_'.date('Ymd_His').'.'.$imageFile->getClientOriginalExtension();
+
+//     Image::make($imageFile)
+//     ->fit(150,150, function($constraint){
+//         $constraint->upsize();
+//     })->save($location.$imageName);
+
+//     $input['image'] = $location.$imageName;
+// }
