@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use URL;
 
 class RentAd extends Model
 {
     use HasFactory;
+
+    public const RENT_ADD_IMAGE_DIR = 'images/moderator/';
 
     protected $fillable = [
         'title',
@@ -41,5 +44,10 @@ class RentAd extends Model
 
     public function moderator(){
         return $this->belongsTo(User::class, 'moderator_id', 'id');
+    }
+
+    public function getImageAttribute($value)
+    {
+        return URL::To('/').'/'.$value;
     }
 }
