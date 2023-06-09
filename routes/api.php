@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Frontend\SurfaceUserAuthController;
 use App\Http\Controllers\Surface_Users\SurfaceUserController;
-use App\Http\Controllers\Surface_Users\AddPostController;
+use App\Http\Controllers\Frontend\AddPostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\RentType;
@@ -49,6 +49,7 @@ Route::post('/surface-user-register', [SurfaceUserAuthController::class, 'regist
 
 //Add post
 Route::get('/surface-user/get-add-post', [AddPostController::class, 'getAddPost'])->name('surface_user_get_add_post');
+Route::get('/surface-user/get-single-add-post/{id}', [AddPostController::class, 'getSingleAddPost'])->name('surface_user_get_single_add_post');
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/surface-user-logout', [SurfaceUserAuthController::class, 'logout'])->name('surface_user_logout');

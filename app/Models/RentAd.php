@@ -11,6 +11,7 @@ class RentAd extends Model
     use HasFactory;
 
     public const RENT_ADD_IMAGE_DIR = 'images/moderator/';
+    protected $appends = ['image'];
 
     protected $fillable = [
         'title',
@@ -48,6 +49,7 @@ class RentAd extends Model
 
     public function getImageAttribute($value)
     {
-        return URL::To('/').'/'.$value;
+        $imageUrl = url($this->attributes['image']);
+        return $imageUrl;
     }
 }
