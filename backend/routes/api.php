@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/surface-user-login', [SurfaceUserAuthController::class, 'login'])->name('surface_user_login');
 Route::post('/surface-user-register', [SurfaceUserAuthController::class, 'register'])->name('surface_user_register');
 
+Route::post('/area-list', [AdController::class, 'areaList'])->name('area_list');
+Route::post('/rent-type-list', [AdController::class, 'rentTypeList'])->name('rent_type_list');
+
 //Add post
 Route::controller(AdController::class)->group(function(){
     route::post('ads', 'index');

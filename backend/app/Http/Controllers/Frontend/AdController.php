@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RentAd;
 use App\Models\User;
+use App\Models\Area;
+use App\Models\RentType;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\DB;
@@ -103,6 +105,18 @@ class AdController extends Controller
         $rent_ad->save();
 
         return response()->json(['message' => 'Created Successfully',], 200);
+    }
+
+    public function areaList (Request $request)
+    {
+        $area_list = Area::orderBy('name','asc')->paginate(25);
+        return response()->json(['areas' => $area_list], 200);
+    }
+
+    public function rentTypeList (Request $request)
+    {
+        $rent_type_list = RentType::orderBy('id','asc')->get();
+        return response()->json(['rent_types' => $rent_type_list], 200);
     }
 
 }
