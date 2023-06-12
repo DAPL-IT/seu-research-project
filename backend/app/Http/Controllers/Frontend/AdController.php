@@ -49,6 +49,8 @@ class AdController extends Controller
             'floor' => 'required|integer',
             'full_address' => 'required',
             'description' => 'required',
+            'rent_type_id' => 'required',
+            'area_id' => 'required',
         ]);
 
         if($validator->fails()){
