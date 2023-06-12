@@ -17,6 +17,7 @@ Route::controller(AdController::class)->group(function(){
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/surface-user-logout', [SurfaceUserAuthController::class, 'logout'])->name('surface_user_logout');
+    Route::post('/create-ad', [AdController::class, 'create'])->name('create_ad');
 });
 
 //This will be POST when making functional, just work on the index function
