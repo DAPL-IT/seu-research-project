@@ -24,7 +24,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
 });
 
 //This will be POST when making functional, just work on the index function
-Route::get('search', [SearchController::class, 'index']);
+Route::post('search', [SearchController::class, 'index']);
 
 
 //Do not uncomment this require/import
