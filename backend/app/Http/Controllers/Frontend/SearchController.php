@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\RentClassification;
+use App\Models\RentAd;
 use Illuminate\Http\Request;
 use Phpml\ModelManager;
+use Illuminate\Support\Facades\Validator;
 
 class SearchController extends Controller
 {
@@ -17,19 +19,35 @@ class SearchController extends Controller
      */
     public function index(Request $request)
     {
-        $rooms = 2 ; // these
-        $bathrooms = 1; //data
-        $square_feet = 250; //will
-        $area_id = 8;// come from search form of frontend
+        $validator = Validator::make($request->all(), [
+            'rooms' => 'required|integer',
+            'bathrooms' => 'required|integer',
+            'square_feet' => 'required|integer',
+            'area_id' => 'required',
+        ]);
+
+        if($validator->fails()){
+            $response = ['validation' => $validator->errors()];
+            return response()->json($response, 422);
+        }
+
+        $rooms = $request->rooms;
+        $bathrooms = $request->bathrooms;
+        $square_feet = $request->square_feet;
+        $area_id = $request->area_id;
 
         //then we will predict the price range make a DB query
-
         $predicted_range = $this->getPredictedRange($rooms, $bathrooms, $square_feet, $area_id)['predicted range'];
 
-        //Now implement the rest
+        $min_price = $predicted_range[0];
+        $max_price = $predicted_range[1];
+        $suggested_houses = RentAd::whereBetween('price', [$min_price, $max_price])->where('area_id', $area_id)
+        ->with('rent_type', 'area', 'poster')->get();
 
-        //just a demo return to see predicted_range
-        return $predicted_range;
+        if($suggested_houses->isEmpty()){
+            return response()->json(['message'=>'Not Found!'], 404);
+        }
+        return response()->json(['results' => $suggested_houses], 200);
 
     }
 
