@@ -8,7 +8,9 @@ export const useAdsStore = defineStore('adsStore', {
       ad: {},
       isFetching: false,
       lastPage: null,
-      currPage: 1
+      currPage: 1,
+      searched_ads: [],
+      isSearching: false
     }
   },
   actions: {
@@ -38,6 +40,24 @@ export const useAdsStore = defineStore('adsStore', {
         return ex
       } finally {
         this.isFetching = false
+      }
+    },
+    async search(q) {
+      this.isSearching = true
+      try {
+        const response = await API.post('search', {
+          ...q
+        })
+        const data = await response.data
+        this.currPage = q.page
+        this.lastPage = data.ads.last_page
+        this.searched_ads = data.ads.data
+
+        return data.ads
+      } catch (ex) {
+        return ex
+      } finally {
+        this.isSearching = false
       }
     }
   }

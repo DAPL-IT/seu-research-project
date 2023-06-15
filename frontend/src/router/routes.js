@@ -47,6 +47,11 @@ const router = createRouter({
       beforeEnter: redirectIfAlredyLoggedIn
     },
     {
+      path: '/search',
+      name: 'search',
+      component: () => import('../views/SearchView.vue')
+    },
+    {
       path: '/:catchAll(.*)',
       name: 'not_found',
       component: () => import('../views/NotFoundView.vue')

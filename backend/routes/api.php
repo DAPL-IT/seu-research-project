@@ -11,6 +11,7 @@ Route::post('/surface-user-register', [SurfaceUserAuthController::class, 'regist
 
 Route::post('/area-list', [AdController::class, 'areaList'])->name('area_list');
 Route::post('/rent-type-list', [AdController::class, 'rentTypeList'])->name('rent_type_list');
+Route::post('/area-search', [AdController::class, 'areaSearch'])->name('area_search');
 
 //Add post
 Route::controller(AdController::class)->group(function(){

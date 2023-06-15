@@ -36,18 +36,16 @@ class SearchController extends Controller
         $square_feet = $request->square_feet;
         $area_id = $request->area_id;
 
-        //then we will predict the price range make a DB query
-        $predicted_range = $this->getPredictedRange($rooms, $bathrooms, $square_feet, $area_id)['predicted range'];
+        // //then we will predict the price range make a DB query
+        $predicted_range = $this->getPredictedRange($rooms, $bathrooms, $square_feet, $area_id)['predicted_range'];
 
-        $min_price = $predicted_range[0];
-        $max_price = $predicted_range[1];
+        $min_price = $predicted_range['from'];
+        $max_price = $predicted_range['to'];
         $suggested_houses = RentAd::whereBetween('price', [$min_price, $max_price])->where('area_id', $area_id)
-        ->with('rent_type', 'area', 'poster')->get();
+        ->where('status', 1)
+        ->with('rent_type', 'area', 'poster')->paginate(27);
 
-        if($suggested_houses->isEmpty()){
-            return response()->json(['message'=>'Not Found!'], 404);
-        }
-        return response()->json(['results' => $suggested_houses], 200);
+        return response()->json(['ads' => $suggested_houses], 200);
 
     }
 
@@ -76,9 +74,11 @@ class SearchController extends Controller
         $final_price_range = $this->calculateFinalPriceRange($closest_range, $lr_predicted_price);
 
         return [
-            'predicted price '=>$lr_predicted_price,
-            'predicted range' => [$final_price_range['from'],
-                                 $final_price_range['to']]
+            'predicted_price '=>$lr_predicted_price,
+            'predicted_range' => [
+                'from'=>$final_price_range['from'],
+                'to'=>$final_price_range['to']
+            ]
         ];
     }
 

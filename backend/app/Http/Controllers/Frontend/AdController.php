@@ -113,6 +113,12 @@ class AdController extends Controller
         return response()->json(['areas' => $area_list], 200);
     }
 
+    public function areaSearch (Request $request)
+    {
+        $area_list = Area::where('name','LIKE',"%{$request->q}%")->get();
+        return response()->json(['areas' => $area_list], 200);
+    }
+
     public function rentTypeList (Request $request)
     {
         $rent_type_list = RentType::orderBy('id','asc')->get();
