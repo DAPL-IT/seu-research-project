@@ -63,6 +63,12 @@
                           <strong>Floor:</strong>
                           <span>{{ adsStore.ad.floor }}</span>
                         </li>
+                        <li class="d-flex justify-content-between">
+                          <strong>Square Feet:</strong>
+                          <span>{{
+                            `${adsStore.ad.square_feet ? adsStore.ad.square_feet : 'N/A'}`
+                          }}</span>
+                        </li>
                         <li class="d-flex justify-content-between" v-if="adsStore.ad.price">
                           <strong>Rent:</strong>
                           <span>{{ adsStore.ad.price.toLocaleString() }} BDT</span>
@@ -81,12 +87,7 @@
                   </div>
                   <div class="property-description">
                     <p class="description color-text-a text-justify">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt fugit
-                      molestias tenetur. Molestias, minima aliquid. Modi nesciunt, aspernatur libero
-                      aperiam quae dicta? Recusandae dolorem, debitis nemo quas odit laboriosam
-                      quisquam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur,
-                      quisquam? Vero iure quos magnam id rem dolore expedita quasi, sunt maxime
-                      sequi quaerat. Nam cupiditate aliquam repudiandae? Ad, aliquam commodi.
+                      {{ adsStore.ad.description }}
                     </p>
                   </div>
                 </div>
@@ -129,13 +130,12 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useAdsStore } from '../stores/AdsStore'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 const adsStore = useAdsStore()
 const route = useRoute()
-const router = useRouter()
 
 onMounted(() => {
-  adsStore.getSingle(route.params.id).then((d) => console.log(d.data.ad))
+  adsStore.getSingle(route.params.id)
 })
 </script>

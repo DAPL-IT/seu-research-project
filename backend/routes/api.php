@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('/surface-user-login', [SurfaceUserAuthController::class, 'login'])->name('surface_user_login');
 Route::post('/surface-user-register', [SurfaceUserAuthController::class, 'register'])->name('surface_user_register');
 
-Route::post('/area-list', [AdController::class, 'areaList'])->name('area_list');
-Route::post('/rent-type-list', [AdController::class, 'rentTypeList'])->name('rent_type_list');
-
 //Add post
 Route::controller(AdController::class)->group(function(){
     route::post('ads', 'index');
     route::post('ad', 'show');
+    Route::post('/area-search', 'areaSearch');
+    Route::post('/area-list',  'areaList');
+    Route::get('/rent-type-list', 'rentTypeList');
 });
 
 Route::middleware(['auth:sanctum'])->group(function(){
@@ -23,7 +23,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/create-ad', [AdController::class, 'create'])->name('create_ad');
 });
 
-//This will be POST when making functional, just work on the index function
+
 Route::post('search', [SearchController::class, 'index']);
 
 

@@ -11,7 +11,6 @@ use App\Models\Area;
 use App\Models\RentType;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class AdController extends Controller
@@ -46,13 +45,19 @@ class AdController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:4|max:100',
             'price' => 'required|numeric',
-            'rooms' => 'required|integer',
-            'bathrooms' => 'required|integer',
+            'rooms' => 'required|integer|gte:bathrooms',
+            'bathrooms' => 'required|integer|lte:rooms',
             'floor' => 'required|integer',
+            'square_feet' => 'required|integer|min:100',
             'full_address' => 'required',
             'description' => 'required',
             'rent_type_id' => 'required',
             'area_id' => 'required',
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:5121'
+        ],[
+            'image.max' => 'Maximum image size allowed is 5MB',
+            'rooms.gte' => 'Room numbers should be greater than or equal to bathroom numbers',
+            'bathrooms.lte' => 'Bathroom numbers should be greater than or equal to room numbers'
         ]);
 
         if($validator->fails()){
@@ -78,38 +83,41 @@ class AdController extends Controller
         $rent_ad->area_id = $request->area_id;
         $rent_ad->poster_id = $user->id;
 
-        //Assign Random moderator...
-        $moderatorIds = User::where('role', 'moderator')->where('locked', 0)->pluck('id');
-        $randomModeratorId = User::select(DB::raw('FLOOR(RAND() * COUNT(*)) as random_id'))->value('random_id');
-        $randomModerator = User::where('id', $randomModeratorId)->first();
-        if($randomModerator){
-            $rent_ad->moderator_id  = $randomModerator->id;
-        }
-        //Assign Random moderator...
+        $moderator_id = User::where('role', 'moderator')
+           ->where('locked', 0)
+           ->inRandomOrder()
+           ->first()
+           ->id;
 
-        //Image Upload...
+        $rent_ad->moderator_id = $moderator_id;
+
         if($request->hasFile('image')){
             $location  = RentAd::IMAGE_DIR;
             $imageFile = $request->file('image');
-            $imageName = Str::random(16).'_dt_'.date('Ymd_His').'.'.$imageFile->getClientOriginalExtension();
+            $imageName = Str::random(24).'_dt_'.date('Ymd_His').'.'.$imageFile->getClientOriginalExtension();
 
             Image::make($imageFile)
-            ->fit(150,150, function($constraint){
-                $constraint->upsize();
-            })->save($location.$imageName);
+            ->resize(1920,960)
+            ->encode(null, 50)
+            ->save($location.$imageName);
 
             $rent_ad->image = $location.$imageName;
         }
-        //Image Upload...
 
         $rent_ad->save();
 
-        return response()->json(['message' => 'Created Successfully',], 200);
+        return response()->json(['message' => 'Rent Ad has been created'], 200);
     }
 
     public function areaList (Request $request)
     {
         $area_list = Area::orderBy('name','asc')->paginate(25);
+        return response()->json(['areas' => $area_list], 200);
+    }
+
+    public function areaSearch (Request $request)
+    {
+        $area_list = Area::where('name','LIKE',"%{$request->q}%")->get();
         return response()->json(['areas' => $area_list], 200);
     }
 

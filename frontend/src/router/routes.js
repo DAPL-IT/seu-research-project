@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useLoginStore } from '../stores/LoginStore'
 
-// const routeAuthGuard = (to, from, next) => {
-//   const loginStore = useLoginStore()
-//   const isLoggedIn = loginStore.user.isLoggedIn
-//   if (isLoggedIn) {
-//     next()
-//   } else {
-//     next('/')
-//   }
-// }
+const routeAuthGuard = (to, from, next) => {
+  const loginStore = useLoginStore()
+  const isLoggedIn = loginStore.user.isLoggedIn
+  if (isLoggedIn) {
+    next()
+  } else {
+    next('/')
+  }
+}
 
 const redirectIfAlredyLoggedIn = (to, from, next) => {
   const loginStore = useLoginStore()
@@ -45,6 +45,17 @@ const router = createRouter({
       name: 'register',
       component: () => import('../views/RegisterView.vue'),
       beforeEnter: redirectIfAlredyLoggedIn
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: () => import('../views/SearchView.vue')
+    },
+    {
+      path: '/new-rent-ad',
+      name: 'create_ad',
+      component: () => import('../views/CreateAdView.vue'),
+      beforeEnter: routeAuthGuard
     },
     {
       path: '/:catchAll(.*)',

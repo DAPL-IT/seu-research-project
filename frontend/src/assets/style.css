@@ -885,9 +885,9 @@ a:hover {
   transition: all 0.6s ease;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .box-collapse {
-    width: 55%;
+    width: 45%;
   }
 }
 
