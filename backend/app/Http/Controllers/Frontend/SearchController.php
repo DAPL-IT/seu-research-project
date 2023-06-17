@@ -42,7 +42,7 @@ class SearchController extends Controller
         $min_price = $predicted_range['from'];
         $max_price = $predicted_range['to'];
         $suggested_houses = RentAd::whereBetween('price', [$min_price, $max_price])->where('area_id', $area_id)
-        ->where('status', 1)
+        ->orderBy('id', 'desc')
         ->with('rent_type', 'area', 'poster')->paginate(27);
 
         return response()->json(['ads' => $suggested_houses], 200);

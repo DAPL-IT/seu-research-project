@@ -19,6 +19,7 @@ class RentAd extends Model
         'rooms',
         'bathrooms',
         'floor',
+        'square_feet',
         'description',
         'full_address',
         'status',

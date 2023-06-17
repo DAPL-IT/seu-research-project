@@ -39,7 +39,7 @@
           </li>
           <li v-if="loginStore.isLoggedIn" class="nav-item dropdown">
             <a
-              class="nav-link dropdown-toggle"
+              class="nav-link dropdown-toggle text-uppercase"
               href="#"
               id="navbarDropdown"
               role="button"
@@ -52,7 +52,7 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">Profile</a>
               <a class="dropdown-item" href="#">My Ads</a>
-              <a class="dropdown-item" href="#">Post New</a>
+              <RouterLink class="dropdown-item" :to="{ name: 'create_ad' }">Post New</RouterLink>
               <div class="dropdown-divider"></div>
               <button class="dropdown-item" id="logout-btn" @click="handleLogoutClick">
                 Logout

@@ -139,9 +139,17 @@ class RentAdController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $rentAd = RentAd::findOrFail($id);
-        dd($rentAd);
+        $rentAd = RentAd::findOrFail($request->id);
+        $rentAd->delete();
+        //dd(array_flip($this->status)[$rentAd->status]);
+        if (Auth::user()->role == 'admin') {
+            return redirect()->route('admin.manage.rent_ads.all', ['status' => array_flip($this->status)[$rentAd->status]])
+                ->with('alert', $this->successAlert('Delete Successfully!'));
+        }
+
+        return redirect()->route('admin.manage.rent_ads.all', ['status' => array_flip($this->status)[$rentAd->status]])
+            ->with('alert', $this->successAlert('Delete Successfully!'));
     }
 }

@@ -129,7 +129,7 @@ Manage Rent Ad
                     </select>
                 </div>
                 <div class="form-group mt-3">
-                    <a href="" class="btn btn-danger btn-sm delete-btn"><i class="fas fa-trash"></i>&ensp;Delete Ad</a>
+                    <a href="{{route('manage.rent_ads.delete', ['role'=>Auth::user()->role,'id'=>$rentAd->id])}}" class="btn btn-danger btn-sm delete-btn"><i class="fas fa-trash"></i>&ensp;Delete Ad</a>
                     <button class="btn btn-primary btn-sm " type="submit"><i class="fas fa-edit"></i>&ensp;Update</button>
                 </div>
             </form>
@@ -157,7 +157,7 @@ $(document).ready(function(){
             confirmButtonText: 'Delete'
             }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "<?php echo URL::to($auth_user.'/manage/rent-ads/delete/'.$rentAd->id); ?>";
+                window.location.href = url;
             }
         });
     });
