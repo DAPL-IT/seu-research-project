@@ -51,7 +51,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">Profile</a>
-              <a class="dropdown-item" href="#">My Ads</a>
+              <RouterLink class="dropdown-item" :to="{ name: 'my_ads' }">My Ads</RouterLink>
               <RouterLink class="dropdown-item" :to="{ name: 'create_ad' }">Post New</RouterLink>
               <div class="dropdown-divider"></div>
               <button class="dropdown-item" id="logout-btn" @click="handleLogoutClick">

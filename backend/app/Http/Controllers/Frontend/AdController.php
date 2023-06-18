@@ -127,4 +127,33 @@ class AdController extends Controller
         return response()->json(['rent_types' => $rent_type_list], 200);
     }
 
+    public function getAdsByUser(Request $request){
+        $loggedInUserId = Auth::user()->id;
+        $ads = RentAd::where('poster_id', $loggedInUserId)
+                     ->orderBy('id','desc')
+                     ->get();
+
+        return response()->json(['ads'=>$ads], 200);
+    }
+
+    public function deleteByUser(Request $request){
+
+        $loggedInUserId = Auth::user()->id;
+        $ad = RentAd::where('poster_id', $loggedInUserId)
+                    ->where('id', $request->id)
+                    ->first();
+
+        if($ad == null){
+            return response()->json(['error'=>'Not Found!'], 404);
+        }
+
+        if(str_contains($ad->image, 'demo.jpg') == false && file_exists($ad->image)){
+            unlink($ad->image);
+        }
+
+        $ad->delete();
+
+        return response()->json(['message'=>'Ad Deleted!'], 200);
+    }
+
 }

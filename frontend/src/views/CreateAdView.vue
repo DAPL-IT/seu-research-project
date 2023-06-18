@@ -257,7 +257,7 @@ const handleSubmit = () => {
     .add(formValue.value)
     .then((d) => {
       toaster.success(d.message)
-      router.push({ name: 'home' })
+      router.push({ name: 'my_ads' })
     })
     .catch((e) => (validationError.value = e))
 }

@@ -11,7 +11,8 @@ export const useAdsStore = defineStore('adsStore', {
       currPage: 1,
       searched_ads: [],
       isSearching: false,
-      isSubmitting: false
+      isSubmitting: false,
+      user_ads: []
     }
   },
   actions: {
@@ -74,6 +75,28 @@ export const useAdsStore = defineStore('adsStore', {
         return Promise.reject(ex.response.data.validation)
       } finally {
         this.isSubmitting = false
+      }
+    },
+    async getAdsByUser() {
+      this.isFetching = true
+      try {
+        const response = await API.get('user-ads')
+        const data = await response.data
+        this.user_ads = data.ads
+        return data.ads
+      } catch (ex) {
+        return ex
+      } finally {
+        this.isFetching = false
+      }
+    },
+    async deleteByUser(id) {
+      try {
+        const response = await API.delete(`user-ads-delete/${id}`)
+        const data = await response.data
+        return data
+      } catch (ex) {
+        return Promise.reject(ex.response.data)
       }
     }
   }
