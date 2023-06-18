@@ -20,7 +20,9 @@ Route::controller(AdController::class)->group(function(){
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/surface-user-logout', [SurfaceUserAuthController::class, 'logout'])->name('surface_user_logout');
-    Route::post('/create-ad', [AdController::class, 'create'])->name('create_ad');
+    Route::post('/create-ad', [AdController::class, 'create']);
+    Route::get('/user-ads',  [AdController::class, 'getAdsByUser']);
+    Route::delete('/user-ads-delete/{id}',  [AdController::class, 'deleteByUser']);
 });
 
 

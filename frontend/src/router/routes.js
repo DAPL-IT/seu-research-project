@@ -58,6 +58,12 @@ const router = createRouter({
       beforeEnter: routeAuthGuard
     },
     {
+      path: '/my-ads',
+      name: 'my_ads',
+      component: () => import('../views/MyAdsView.vue'),
+      beforeEnter: routeAuthGuard
+    },
+    {
       path: '/:catchAll(.*)',
       name: 'not_found',
       component: () => import('../views/NotFoundView.vue')
