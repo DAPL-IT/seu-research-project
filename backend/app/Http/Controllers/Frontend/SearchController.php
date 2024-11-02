@@ -45,7 +45,7 @@ class SearchController extends Controller
         ->orderBy('id', 'desc')
         ->with('rent_type', 'area', 'poster')->paginate(27);
 
-        return response()->json(['ads' => $suggested_houses], 200);
+        return response()->json(['ads' => $suggested_houses, 'range'=>$predicted_range], 200);
 
     }
 
@@ -120,56 +120,54 @@ class SearchController extends Controller
 
     private function getClosestPriceRangeFromPredictedClassifiers(
         $predicted_classifier_price_ranges,
-        $predicted_price)
-        {
-            $min_distance = PHP_INT_MAX;
-            $closest = null;
+        $predicted_price){
 
-            foreach($predicted_classifier_price_ranges as $key=>$range){
-                $distance = 0;
-                if($predicted_price < $range['from']){
-                    $distance = $range['from'] - $predicted_price;
-                }
-                else if($predicted_price > $range['to']){
-                    $distance = $predicted_price - $range['to'];
-                }
-                if($distance < $min_distance){
-                    $min_distance = $distance;
-                    $closest = $range;
-                }
+        $min_distance = PHP_INT_MAX;
+        $closest = null;
+
+        foreach($predicted_classifier_price_ranges as $key=>$range){
+            $distance = 0;
+            if($predicted_price < $range['from']){
+                $distance = $range['from'] - $predicted_price;
             }
-            return $closest;
+            else if($predicted_price > $range['to']){
+                $distance = $predicted_price - $range['to'];
+            }
+            if($distance < $min_distance){
+                $min_distance = $distance;
+                $closest = $range;
+            }
+        }
+        return $closest;
     }
 
+
     private function calculateFinalPriceRange($closest, $predicted_price){
-            $from = $closest['from'];
-            $to   = $closest['to'];
+        $from = $closest['from'];
+        $to   = $closest['to'];
 
-            if(!($predicted_price >= $from && $predicted_price <= $to)){
-                $range_diff = $to - $from;
-                $from_diff = (($from - $predicted_price + 1) >= $range_diff) ? true : false;
-                $to_diff = (($predicted_price - $to + 1) >= $range_diff) ? true : false;
+        if(!($predicted_price >= $from && $predicted_price <= $to)){
+            $range_diff = $to - $from;
+            $from_diff = (($from - $predicted_price + 1) >= $range_diff) ? true : false;
+            $to_diff = (($predicted_price - $to + 1) >= $range_diff) ? true : false;
 
-                if($predicted_price < $from && $from_diff){
-                    $to = $from;
-                    $from = $predicted_price;
-                }
-                else if($predicted_price > $to && $to_diff){
-                    $from = $to;
-                    $to = $predicted_price;
-                }
-                else if($predicted_price < $from){
-                    $from = $from - ($from-$predicted_price);
-                }
-                else if($predicted_price > $from){
-                    $to = $to + ($predicted_price - $to);
-                }
+            if($predicted_price < $from && $from_diff){
+                $to = $from;
+                $from = $predicted_price;
             }
+            else if($predicted_price > $to && $to_diff){
+                $from = $to;
+                $to = $predicted_price;
+            }
+            else if($predicted_price < $from){
+                $from = $from - ($from-$predicted_price);
+            }
+            else if($predicted_price > $from){
+                $to = $to + ($predicted_price - $to);
+            }
+        }
 
-            return [
-                'from' => $from,
-                'to' => $to
-            ];
+        return ['from' => $from,'to' => $to];
     }
 
 }
