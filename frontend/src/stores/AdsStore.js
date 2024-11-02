@@ -54,7 +54,7 @@ export const useAdsStore = defineStore('adsStore', {
         this.currPage = q.page
         this.lastPage = data.ads.last_page
         this.searched_ads = data.ads.data
-
+        //console.log(data)
         return data.ads
       } catch (ex) {
         return ex
